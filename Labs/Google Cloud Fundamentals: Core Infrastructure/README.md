@@ -15,3 +15,8 @@ Tomorrow, you will start the learning path by doing week 1 of the learning path 
 Good luck and happy learning,
 
 Raja
+
+---
+
+
+[Google Cloud Skills Boost account‬: Sign In](https://www.cloudskillsboost.google/users/sign_in)
