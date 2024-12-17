@@ -4,7 +4,7 @@ T Technical Teaching                 Clouds
 - APPUSWAMY Raja
 - YAN Yiqing
 - MARINELLI Eugenio
-= PISANÒ Lorenzo
+- PISANÒ Lorenzo
 
 ## Abstract
 
