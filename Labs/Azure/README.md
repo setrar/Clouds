@@ -1,4 +1,7 @@
-	
+
+- [ ] [Azure Portal](https://portal.azure.com/)
+
+ 
 Hello future cloud architects,
 
 As promised, your Azure assignments are out. On Moodle, you will find the tasks to carry out and you will also find the deliverable document you need to submit. There are two labs, each of which has a series of subtasks. As mentioned in the class, you will be using Azure Learn and also the azuremol book which has been uploaded to Moodle also for your convenience. 
