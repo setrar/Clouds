@@ -1,5 +1,5 @@
 
-- [ ] [Azure Portal](https://portal.azure.com/) use setrar@hotmail.com
+- [ ] [Azure Portal](https://portal.azure.com/) use set...@hotmail.com
 
  
 Hello future cloud architects,
