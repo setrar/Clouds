@@ -3,7 +3,7 @@ Hello future cloud architects,
 
 As promised, your Azure assignments are out. On Moodle, you will find the tasks to carry out and you will also find the deliverable document you need to submit. There are two labs, each of which has a series of subtasks. As mentioned in the class, you will be using Azure Learn and also the azuremol book which has been uploaded to Moodle also for your convenience. 
 
-Deadline: You are expected to turn in both assignments by January 12. THIS IS A HARD DEADLINE. SUBMISSIONS AFTER THIS WILL NOT BE ACCEPTED. 
+Deadline: You are expected to turn in both assignments by January 12. ***THIS IS A HARD DEADLINE. SUBMISSIONS AFTER THIS WILL NOT BE ACCEPTED.*** 
 
 Note-1: When you sign up for the free Azure account, make sure you get the "Azure for students" subscription (https://azure.microsoft.com/en-us/free/students/). This student account will give you 100$ credit for a whole year. So make sure you get it.
 
