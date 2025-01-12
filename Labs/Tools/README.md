@@ -1,12 +1,14 @@
 # OpenTofu
 
-Yes, OpenTofu can be installed via Homebrew on macOS, as it is supported in the Homebrew package manager.
+OpenTofu can be installed via Homebrew on macOS, as it is supported in the Homebrew package manager.
 
 Steps to Install OpenTofu with Homebrew
 	1.	Ensure Homebrew is Installed:
 If you don’t already have Homebrew, install it by running:
 
+```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 
 	2.	Add the OpenTofu Tap:
