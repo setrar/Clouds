@@ -34,6 +34,11 @@
    ```bash
    tofu --version
    ```
+   > Returns
+   ```powershell
+   OpenTofu v1.9.0
+   on darwin_arm64
+   ```
 
    If installed correctly, this will display the version of OpenTofu.
 
@@ -47,5 +52,3 @@
 ---
 
 If OpenTofu is not available directly in Homebrew or the tap, you can download the binary from the [OpenTofu GitHub releases page](https://github.com/opentofu) and place it in a directory in your `$PATH`.
-
-Would you like assistance with using OpenTofu after installation?
