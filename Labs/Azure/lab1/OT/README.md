@@ -285,6 +285,126 @@ To apply your configuration with the separate files:
    ```bash
    tofu plan
    ```
+   > Returns
+   ```powershell   
+   OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+   the following symbols:
+     + create
+   
+   OpenTofu will perform the following actions:
+   
+     # azurerm_network_interface.example will be created
+     + resource "azurerm_network_interface" "example" {
+         + accelerated_networking_enabled = false
+         + applied_dns_servers            = (known after apply)
+         + id                             = (known after apply)
+         + internal_domain_name_suffix    = (known after apply)
+         + ip_forwarding_enabled          = false
+         + location                       = "eastus"
+         + mac_address                    = (known after apply)
+         + name                           = "example-nic"
+         + private_ip_address             = (known after apply)
+         + private_ip_addresses           = (known after apply)
+         + resource_group_name            = "example-resources"
+         + virtual_machine_id             = (known after apply)
+   
+         + ip_configuration {
+             + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+             + name                                               = "internal"
+             + primary                                            = (known after apply)
+             + private_ip_address                                 = (known after apply)
+             + private_ip_address_allocation                      = "Dynamic"
+             + private_ip_address_version                         = "IPv4"
+             + subnet_id                                          = (known after apply)
+           }
+       }
+   
+     # azurerm_resource_group.example will be created
+     + resource "azurerm_resource_group" "example" {
+         + id       = (known after apply)
+         + location = "eastus"
+         + name     = "example-resources"
+       }
+   
+     # azurerm_subnet.example will be created
+     + resource "azurerm_subnet" "example" {
+         + address_prefixes                              = [
+             + "10.0.2.0/24",
+           ]
+         + default_outbound_access_enabled               = true
+         + id                                            = (known after apply)
+         + name                                          = "example-subnet"
+         + private_endpoint_network_policies             = "Disabled"
+         + private_link_service_network_policies_enabled = true
+         + resource_group_name                           = "example-resources"
+         + virtual_network_name                          = "example-vnet"
+       }
+   
+     # azurerm_virtual_machine.example will be created
+     + resource "azurerm_virtual_machine" "example" {
+         + availability_set_id              = (known after apply)
+         + delete_data_disks_on_termination = false
+         + delete_os_disk_on_termination    = false
+         + id                               = (known after apply)
+         + license_type                     = (known after apply)
+         + location                         = "eastus"
+         + name                             = "example-vm"
+         + network_interface_ids            = (known after apply)
+         + resource_group_name              = "example-resources"
+         + vm_size                          = "Standard_B2s"
+   
+         + os_profile {
+             # At least one attribute in this block is (or was) sensitive,
+             # so its contents will not be displayed.
+           }
+   
+         + os_profile_linux_config {
+             + disable_password_authentication = false
+           }
+   
+         + storage_data_disk (known after apply)
+   
+         + storage_image_reference {
+             + offer     = "UbuntuServer"
+             + publisher = "Canonical"
+             + sku       = "18.04-LTS"
+             + version   = "latest"
+           }
+   
+         + storage_os_disk {
+             + caching                   = "ReadWrite"
+             + create_option             = "FromImage"
+             + disk_size_gb              = (known after apply)
+             + managed_disk_id           = (known after apply)
+             + managed_disk_type         = "Standard_LRS"
+             + name                      = "example-os-disk"
+             + os_type                   = (known after apply)
+             + write_accelerator_enabled = false
+           }
+       }
+   
+     # azurerm_virtual_network.example will be created
+     + resource "azurerm_virtual_network" "example" {
+         + address_space                  = [
+             + "10.0.0.0/16",
+           ]
+         + dns_servers                    = (known after apply)
+         + guid                           = (known after apply)
+         + id                             = (known after apply)
+         + location                       = "eastus"
+         + name                           = "example-vnet"
+         + private_endpoint_vnet_policies = "Disabled"
+         + resource_group_name            = "example-resources"
+         + subnet                         = (known after apply)
+       }
+   
+   Plan: 5 to add, 0 to change, 0 to destroy.
+   
+   ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   
+   Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly these actions
+   if you run "tofu apply" now.
+   ```
 3. Apply:
    ```bash
    tofu apply
