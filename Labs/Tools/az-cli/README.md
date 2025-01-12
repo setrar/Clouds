@@ -1,5 +1,7 @@
 # Azure-CLI
 
+## Connect Using Azure-CLI
+
 To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integrate both tools effectively for provisioning and managing Azure resources.
 
 ---
@@ -267,4 +269,186 @@ resource "azurerm_subnet" "example" {
 
 ---
 
-Would you like help with a specific use case or further customization of the configurations?
+## **basic Azure CLI commands**
+
+Here’s a list of **basic Azure CLI commands** grouped by common use cases. These commands will help you navigate and manage Azure resources efficiently.
+
+---
+
+### **General Commands**
+- **Login to Azure:**
+  ```bash
+  az login
+  ```
+- **Check Your Azure CLI Version:**
+  ```bash
+  az --version
+  ```
+- **List All Available Commands:**
+  ```bash
+  az --help
+  ```
+
+---
+
+### **Resource Group Management**
+- **List Resource Groups:**
+  ```bash
+  az group list --output table
+  ```
+- **Create a Resource Group:**
+  ```bash
+  az group create --name <resource-group-name> --location <location>
+  ```
+  Example:
+  ```bash
+  az group create --name myResourceGroup --location "East US"
+  ```
+- **Delete a Resource Group:**
+  ```bash
+  az group delete --name <resource-group-name> --yes --no-wait
+  ```
+
+---
+
+### **Virtual Machines (VMs)**
+- **List All VMs:**
+  ```bash
+  az vm list --output table
+  ```
+- **Create a VM:**
+  ```bash
+  az vm create \
+    --resource-group <resource-group-name> \
+    --name <vm-name> \
+    --image UbuntuLTS \
+    --admin-username <username> \
+    --admin-password <password>
+  ```
+  Example:
+  ```bash
+  az vm create \
+    --resource-group myResourceGroup \
+    --name myVM \
+    --image UbuntuLTS \
+    --admin-username azureuser \
+    --admin-password P@ssw0rd123!
+  ```
+- **Start a VM:**
+  ```bash
+  az vm start --resource-group <resource-group-name> --name <vm-name>
+  ```
+- **Stop a VM:**
+  ```bash
+  az vm stop --resource-group <resource-group-name> --name <vm-name>
+  ```
+- **Delete a VM:**
+  ```bash
+  az vm delete --resource-group <resource-group-name> --name <vm-name> --yes
+  ```
+
+---
+
+### **Storage Accounts**
+- **List Storage Accounts:**
+  ```bash
+  az storage account list --output table
+  ```
+- **Create a Storage Account:**
+  ```bash
+  az storage account create \
+    --name <storage-account-name> \
+    --resource-group <resource-group-name> \
+    --location <location> \
+    --sku Standard_LRS
+  ```
+- **Delete a Storage Account:**
+  ```bash
+  az storage account delete --name <storage-account-name> --resource-group <resource-group-name>
+  ```
+
+---
+
+### **Networking**
+- **List Virtual Networks:**
+  ```bash
+  az network vnet list --output table
+  ```
+- **Create a Virtual Network:**
+  ```bash
+  az network vnet create \
+    --resource-group <resource-group-name> \
+    --name <vnet-name> \
+    --address-prefix 10.0.0.0/16
+  ```
+- **Create a Subnet:**
+  ```bash
+  az network vnet subnet create \
+    --resource-group <resource-group-name> \
+    --vnet-name <vnet-name> \
+    --name <subnet-name> \
+    --address-prefix 10.0.0.0/24
+  ```
+
+---
+
+### **Azure Kubernetes Service (AKS)**
+- **List AKS Clusters:**
+  ```bash
+  az aks list --output table
+  ```
+- **Create an AKS Cluster:**
+  ```bash
+  az aks create \
+    --resource-group <resource-group-name> \
+    --name <aks-cluster-name> \
+    --node-count 3 \
+    --generate-ssh-keys
+  ```
+- **Get AKS Cluster Credentials:**
+  ```bash
+  az aks get-credentials --resource-group <resource-group-name> --name <aks-cluster-name>
+  ```
+- **Delete an AKS Cluster:**
+  ```bash
+  az aks delete --resource-group <resource-group-name> --name <aks-cluster-name> --yes
+  ```
+
+---
+
+### **Monitoring and Logs**
+- **View Azure Activity Logs:**
+  ```bash
+  az monitor activity-log list --output table
+  ```
+- **View Metrics for a Resource:**
+  ```bash
+  az monitor metrics list --resource <resource-id> --output table
+  ```
+- **Set up Azure Monitor Alerts:**
+  ```bash
+  az monitor alert create \
+    --name <alert-name> \
+    --resource-group <resource-group-name> \
+    --scopes <resource-id> \
+    --condition "avg Percentage CPU > 80"
+  ```
+
+---
+
+### **Miscellaneous**
+- **Get Your Azure Account Information:**
+  ```bash
+  az account show
+  ```
+- **List Available Locations:**
+  ```bash
+  az account list-locations --output table
+  ```
+- **Check Resource Usage:**
+  ```bash
+  az vm list-usage --location <location> --output table
+  ```
+
+---
+
