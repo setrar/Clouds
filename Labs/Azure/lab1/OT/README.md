@@ -205,6 +205,8 @@ resource "azurerm_subnet" "example" {
 
 ---
 
+## Structuring the project
+
 Yes, you can absolutely separate the `provider` and `subscription_id` configuration into a different `.tf` file. Terraform/OpenTofu automatically combines all `.tf` files in the same directory during initialization and execution, so separating these configurations is a clean and effective way to organize your project.
 
 ---
