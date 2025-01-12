@@ -105,7 +105,7 @@ To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integr
    -----  -------------------  ------------------------------------  -----------------
    [1] *  Azure for Students   effa0000-28e0-0000-9e9d-323FFFFF4eb  Default Directory
    
-   The default is marked with an *; the default tenant is 'Default Directory' and subscription is 'Azure for Students' (effa7872-28e0-4ec6-9e9d-3235d3e6b4eb).
+   The default is marked with an *; the default tenant is 'Default Directory' and subscription is 'Azure for Students' (effa0000-28e0-0000-9e9d-323FFFFF4eb).
    
    Select a subscription and tenant (Type a number or Enter for no changes): 
    
