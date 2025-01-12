@@ -134,7 +134,7 @@ resource "azurerm_subnet" "example" {
    - Installed hashicorp/azurerm v4.15.0 (signed, key ID 0C0AF313E5FD9F80)
    
    Providers are signed by their developers.
-   If you'd like to know more about provider signing, you can read about it here:
+   If you''d like to know more about provider signing, you can read about it here:
    https://opentofu.org/docs/cli/plugins/signing/
    
    OpenTofu has created a lock file .terraform.lock.hcl to record the provider
