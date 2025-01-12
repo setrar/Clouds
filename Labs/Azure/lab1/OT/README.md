@@ -837,3 +837,19 @@ example-vm  EXAMPLE-RESOURCES  eastus
    │ 
    │ 
    ```
+
+- [ ] Had to manually delete the `Resource Group`
+
+```
+tofu destroy
+```
+> Returns
+```powershell
+azurerm_resource_group.example: Refreshing state... [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-323FFFFF/resourceGroups/example-resources]
+
+No changes. No objects need to be destroyed.
+
+Either you have not created any objects yet or the existing objects were already deleted outside of OpenTofu.
+
+Destroy complete! Resources: 0 destroyed.
+```
