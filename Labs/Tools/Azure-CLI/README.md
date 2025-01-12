@@ -88,7 +88,38 @@ To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integr
    ```bash
    az login
    ```
-   This will open a browser window for authentication. Once logged in, your credentials will be stored locally for use by OpenTofu.
+   > This will open a browser window for authentication. Once logged in, your credentials will be stored locally for use by OpenTofu.
+
+   ```bash
+   az login
+   ```
+   > Returns
+   ```powershell
+   A web browser has been opened at https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize. Please continue the login in the web browser. If no web browser is available or if the web browser fails to open, use device code flow with `az login --use-device-code`.
+   
+   Retrieving tenants and subscriptions for the selection...
+   
+   [Tenant and subscription selection]
+   
+   No     Subscription name    Subscription ID                       Tenant
+   -----  -------------------  ------------------------------------  -----------------
+   [1] *  Azure for Students   effa0000-28e0-0000-9e9d-323FFFFF4eb  Default Directory
+   
+   The default is marked with an *; the default tenant is 'Default Directory' and subscription is 'Azure for Students' (effa7872-28e0-4ec6-9e9d-3235d3e6b4eb).
+   
+   Select a subscription and tenant (Type a number or Enter for no changes): 
+   
+   Tenant: Default Directory
+   Subscription: Azure for Students (effa0000-0000-4ec6-9e9d-323FFFFF4eb)
+   
+   [Announcements]
+   With the new Azure CLI login experience, you can select the subscription you want to use more easily. Learn more about it and its configuration at https://go.microsoft.com/fwlink/?linkid=2271236
+   
+   If you encounter any problem, please open an issue at https://aka.ms/azclibug
+   
+   [Warning] The login output has been updated. Please be aware that it no longer displays the full list of available subscriptions by default.
+   ```
+
 
 ---
 
