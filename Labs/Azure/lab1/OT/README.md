@@ -219,6 +219,12 @@ Define the value of the `subscription_id` here (this file should not be uploaded
 subscription_id = "your-azure-subscription-id"
 ```
 
+How to retrieve your `subscription ID`
+```
+az account show --query id --output tsv
+```
+> effaFFFF-0000-4ec6-9e9d-3235dFFFFFeb
+
 #### **5. `main.tf` File**
 Keep resource definitions here, like this:
 ```hcl
