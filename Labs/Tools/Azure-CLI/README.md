@@ -16,6 +16,47 @@ To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integr
    ```bash
    brew install azure-cli
    ```
+   > Returns
+   ```powershell
+   ==> Downloading https://formulae.brew.sh/api/formula.jws.json
+   ############################################################################################################ 100.0%
+   ==> Downloading https://formulae.brew.sh/api/cask.jws.json
+   ############################################################################################################ 100.0%
+   ==> Downloading https://ghcr.io/v2/homebrew/core/azure-cli/manifests/2.67.0_1
+   ############################################################################################################ 100.0%
+   ==> Fetching dependencies for azure-cli: python@3.12
+   ==> Downloading https://ghcr.io/v2/homebrew/core/python/3.12/manifests/3.12.8
+   Already downloaded: /Users/valiha/Library/Caches/Homebrew/downloads/c8e281b0d5b5a38ad458c87fd3064a69ab50809945e585657d09bcd1c4f0134a--python@3.12-3.12.8.bottle_manifest.json
+   ==> Fetching python@3.12
+   ==> Downloading https://ghcr.io/v2/homebrew/core/python/3.12/blobs/sha256:20eb89eda4a412238d217124182c11c9410361900
+   ############################################################################################################ 100.0%
+   ==> Fetching azure-cli
+   ==> Downloading https://ghcr.io/v2/homebrew/core/azure-cli/blobs/sha256:625075ddb021f2393e7cf776ec42b449b194b562ead
+   ############################################################################################################ 100.0%
+   ==> Installing dependencies for azure-cli: python@3.12
+   ==> Installing azure-cli dependency: python@3.12
+   ==> Downloading https://ghcr.io/v2/homebrew/core/python/3.12/manifests/3.12.8
+   Already downloaded: /Users/valiha/Library/Caches/Homebrew/downloads/c8e281b0d5b5a38ad458c87fd3064a69ab50809945e585657d09bcd1c4f0134a--python@3.12-3.12.8.bottle_manifest.json
+   ==> Pouring python@3.12--3.12.8.arm64_sequoia.bottle.tar.gz
+   ==> /opt/homebrew/Cellar/python@3.12/3.12.8/bin/python3.12 -Im ensurepip
+   ==> /opt/homebrew/Cellar/python@3.12/3.12.8/bin/python3.12 -Im pip install -v --no-index --upgrade --isolated --tar
+   🍺  /opt/homebrew/Cellar/python@3.12/3.12.8: 3,267 files, 65.5MB
+   ==> Installing azure-cli
+   ==> Pouring azure-cli--2.67.0_1.arm64_sequoia.bottle.tar.gz
+   ==> Caveats
+   zsh completions have been installed to:
+     /opt/homebrew/share/zsh/site-functions
+   ==> Summary
+   🍺  /opt/homebrew/Cellar/azure-cli/2.67.0_1: 24,350 files, 578.4MB
+   ==> Running `brew cleanup azure-cli`...
+   Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+   Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+   ==> Caveats
+   ==> azure-cli
+   zsh completions have been installed to:
+   /opt/homebrew/share/zsh/site-functions
+   ```
+   
    Verify installation:
    ```bash
    az --version
