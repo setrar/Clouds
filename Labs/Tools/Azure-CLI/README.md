@@ -61,6 +61,27 @@ To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integr
    ```bash
    az --version
    ```
+   > Returns
+   ```powershell
+   azure-cli                         2.67.0
+
+   core                              2.67.0
+   telemetry                          1.1.0
+   
+   Dependencies:
+   msal                              1.31.0
+   azure-mgmt-resource               23.1.1
+   
+   Python location '/opt/homebrew/Cellar/azure-cli/2.67.0_1/libexec/bin/python'
+   Extensions directory '/Users/valiha/.azure/cliextensions'
+   
+   Python (Darwin) 3.12.8 (main, Dec  3 2024, 18:42:41) [Clang 16.0.0 (clang-1600.0.26.4)]
+   
+   Legal docs and information: aka.ms/AzureCliLegal
+   
+   
+   Your CLI is up-to-date.
+   ```
 
 3. **Authenticate Azure CLI:**
    Log in to Azure using the Azure CLI:
