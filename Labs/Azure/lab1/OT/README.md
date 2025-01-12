@@ -1,5 +1,7 @@
 #  **OpenTofu** with the **Azure CLI**
 
+## Use **OpenTofu** with the **Azure CLI**
+
 To use **OpenTofu** with the **Azure CLI**, you can follow these steps to integrate both tools effectively for provisioning and managing Azure resources.
 
 ---
