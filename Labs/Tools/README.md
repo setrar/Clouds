@@ -4,21 +4,29 @@
 
 ### Steps to Install OpenTofu with Homebrew
 1. **Ensure Homebrew is Installed:**
-   If you don't already have Homebrew, install it by running:
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
 
-2. **Add the OpenTofu Tap:**
-   OpenTofu might not be in the main Homebrew repository, so you may need to add its tap:
-   ```bash
-   brew tap opentofu/tap
-   ```
-
-3. **Install OpenTofu:**
-   Once the tap is added, install OpenTofu:
+2. **Install OpenTofu:**
+   Install OpenTofu:
    ```bash
    brew install opentofu
+   ```
+   > Returns
+   ```powershell
+   opentofu 1.8.2 is already installed but outdated (so it will be upgraded).
+   ==> Downloading https://ghcr.io/v2/homebrew/core/opentofu/manifests/1.9.0
+   ############################################################################################################ 100.0%
+   ==> Fetching opentofu
+   ==> Downloading https://ghcr.io/v2/homebrew/core/opentofu/blobs/sha256:b6c1fcc307e7c4d8cf2f5cd0daf1496a05a16cce15c1
+   ############################################################################################################ 100.0%
+   ==> Upgrading opentofu
+     1.8.2 -> 1.9.0 
+   ==> Pouring opentofu--1.9.0.arm64_sequoia.bottle.tar.gz
+   🍺  /opt/homebrew/Cellar/opentofu/1.9.0: 7 files, 78.2MB
+   ==> Running `brew cleanup opentofu`...
+   Disable this behaviour by setting HOMEBREW_NO_INSTALL_CLEANUP.
+   Hide these hints with HOMEBREW_NO_ENV_HINTS (see `man brew`).
+   Removing: /opt/homebrew/Cellar/opentofu/1.8.2... (7 files, 78.0MB)
+   Removing: /Users/valiha/Library/Caches/Homebrew/opentofu_bottle_manifest--1.8.2... (9.3KB)
    ```
 
 4. **Verify the Installation:**
