@@ -539,24 +539,35 @@ To apply your configuration with the separate files:
    
    azurerm_resource_group.example: Creating...
    azurerm_resource_group.example: Still creating... [10s elapsed]
-   azurerm_resource_group.example: Creation complete after 17s [id=/subscriptions/effa7872-28e0-4ec6-9e9d-3235d3e6b4eb/resourceGroups/example-resources]
+   azurerm_resource_group.example: Creation complete after 17s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFFeb/resourceGroups/example-resources]
    azurerm_virtual_network.example: Creating...
-   azurerm_virtual_network.example: Creation complete after 8s [id=/subscriptions/effa7872-28e0-4ec6-9e9d-3235d3e6b4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet]
+   azurerm_virtual_network.example: Creation complete after 8s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet]
    azurerm_subnet.example: Creating...
    azurerm_subnet.example: Still creating... [10s elapsed]
-   azurerm_subnet.example: Creation complete after 14s [id=/subscriptions/effa7872-28e0-4ec6-9e9d-3235d3e6b4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet/subnets/example-subnet]
+   azurerm_subnet.example: Creation complete after 14s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet/subnets/example-subnet]
    azurerm_network_interface.example: Creating...
    azurerm_network_interface.example: Still creating... [10s elapsed]
-   azurerm_network_interface.example: Creation complete after 14s [id=/subscriptions/effa7872-28e0-4ec6-9e9d-3235d3e6b4eb/resourceGroups/example-resources/providers/Microsoft.Network/networkInterfaces/example-nic]
+   azurerm_network_interface.example: Creation complete after 14s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/networkInterfaces/example-nic]
    azurerm_virtual_machine.example: Creating...
    azurerm_virtual_machine.example: Still creating... [10s elapsed]
    azurerm_virtual_machine.example: Still creating... [20s elapsed]
    azurerm_virtual_machine.example: Still creating... [30s elapsed]
    azurerm_virtual_machine.example: Still creating... [40s elapsed]
    azurerm_virtual_machine.example: Still creating... [50s elapsed]
-   azurerm_virtual_machine.example: Creation complete after 59s [id=/subscriptions/effa7872-28e0-4ec6-9e9d-3235d3e6b4eb/resourceGroups/example-resources/providers/Microsoft.Compute/virtualMachines/example-vm]
+   azurerm_virtual_machine.example: Creation complete after 59s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Compute/virtualMachines/example-vm]
    
    Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
    ```
 
 This setup is modular and easy to manage, especially in larger projects.
+
+```
+az vm list --output table
+```
+> Returns
+```powershell
+
+Name        ResourceGroup      Location    Zones
+----------  -----------------  ----------  -------
+example-vm  EXAMPLE-RESOURCES  eastus
+```
