@@ -419,15 +419,15 @@ To apply your configuration with the separate files:
    ```
    > Returns
    ```powershell
-      
-   OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
-   the following symbols:
+   
+   OpenTofu used the selected providers to generate the following execution plan. Resource actions are
+   indicated with the following symbols:
      + create
    
    OpenTofu will perform the following actions:
    
-     # azurerm_network_interface.example will be created
-     + resource "azurerm_network_interface" "example" {
+     # azurerm_network_interface.lab1 will be created
+     + resource "azurerm_network_interface" "lab1" {
          + accelerated_networking_enabled = false
          + applied_dns_servers            = (known after apply)
          + id                             = (known after apply)
@@ -435,10 +435,10 @@ To apply your configuration with the separate files:
          + ip_forwarding_enabled          = false
          + location                       = "eastus"
          + mac_address                    = (known after apply)
-         + name                           = "example-nic"
+         + name                           = "lab1-nic"
          + private_ip_address             = (known after apply)
          + private_ip_addresses           = (known after apply)
-         + resource_group_name            = "example-resources"
+         + resource_group_name            = "lab1-resources"
          + virtual_machine_id             = (known after apply)
    
          + ip_configuration {
@@ -452,38 +452,38 @@ To apply your configuration with the separate files:
            }
        }
    
-     # azurerm_resource_group.example will be created
-     + resource "azurerm_resource_group" "example" {
+     # azurerm_resource_group.lab1 will be created
+     + resource "azurerm_resource_group" "lab1" {
          + id       = (known after apply)
          + location = "eastus"
-         + name     = "example-resources"
+         + name     = "lab1-resources"
        }
    
-     # azurerm_subnet.example will be created
-     + resource "azurerm_subnet" "example" {
+     # azurerm_subnet.lab1 will be created
+     + resource "azurerm_subnet" "lab1" {
          + address_prefixes                              = [
              + "10.0.2.0/24",
            ]
          + default_outbound_access_enabled               = true
          + id                                            = (known after apply)
-         + name                                          = "example-subnet"
+         + name                                          = "lab1-subnet"
          + private_endpoint_network_policies             = "Disabled"
          + private_link_service_network_policies_enabled = true
-         + resource_group_name                           = "example-resources"
-         + virtual_network_name                          = "example-vnet"
+         + resource_group_name                           = "lab1-resources"
+         + virtual_network_name                          = "lab1-vnet"
        }
    
-     # azurerm_virtual_machine.example will be created
-     + resource "azurerm_virtual_machine" "example" {
+     # azurerm_virtual_machine.lab1 will be created
+     + resource "azurerm_virtual_machine" "lab1" {
          + availability_set_id              = (known after apply)
          + delete_data_disks_on_termination = false
          + delete_os_disk_on_termination    = false
          + id                               = (known after apply)
          + license_type                     = (known after apply)
          + location                         = "eastus"
-         + name                             = "example-vm"
+         + name                             = "lab1-vm"
          + network_interface_ids            = (known after apply)
-         + resource_group_name              = "example-resources"
+         + resource_group_name              = "lab1-resources"
          + vm_size                          = "Standard_B2s"
    
          + os_profile {
@@ -510,14 +510,14 @@ To apply your configuration with the separate files:
              + disk_size_gb              = (known after apply)
              + managed_disk_id           = (known after apply)
              + managed_disk_type         = "Standard_LRS"
-             + name                      = "example-os-disk"
+             + name                      = "lab1-os-disk"
              + os_type                   = (known after apply)
              + write_accelerator_enabled = false
            }
        }
    
-     # azurerm_virtual_network.example will be created
-     + resource "azurerm_virtual_network" "example" {
+     # azurerm_virtual_network.lab1 will be created
+     + resource "azurerm_virtual_network" "lab1" {
          + address_space                  = [
              + "10.0.0.0/16",
            ]
@@ -525,9 +525,9 @@ To apply your configuration with the separate files:
          + guid                           = (known after apply)
          + id                             = (known after apply)
          + location                       = "eastus"
-         + name                           = "example-vnet"
+         + name                           = "lab1-vnet"
          + private_endpoint_vnet_policies = "Disabled"
-         + resource_group_name            = "example-resources"
+         + resource_group_name            = "lab1-resources"
          + subnet                         = (known after apply)
        }
    
@@ -539,24 +539,20 @@ To apply your configuration with the separate files:
    
      Enter a value: yes
    
-   azurerm_resource_group.example: Creating...
-   azurerm_resource_group.example: Still creating... [10s elapsed]
-   azurerm_resource_group.example: Creation complete after 17s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFFeb/resourceGroups/example-resources]
-   azurerm_virtual_network.example: Creating...
-   azurerm_virtual_network.example: Creation complete after 8s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet]
-   azurerm_subnet.example: Creating...
-   azurerm_subnet.example: Still creating... [10s elapsed]
-   azurerm_subnet.example: Creation complete after 14s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/virtualNetworks/example-vnet/subnets/example-subnet]
-   azurerm_network_interface.example: Creating...
-   azurerm_network_interface.example: Still creating... [10s elapsed]
-   azurerm_network_interface.example: Creation complete after 14s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Network/networkInterfaces/example-nic]
-   azurerm_virtual_machine.example: Creating...
-   azurerm_virtual_machine.example: Still creating... [10s elapsed]
-   azurerm_virtual_machine.example: Still creating... [20s elapsed]
-   azurerm_virtual_machine.example: Still creating... [30s elapsed]
-   azurerm_virtual_machine.example: Still creating... [40s elapsed]
-   azurerm_virtual_machine.example: Still creating... [50s elapsed]
-   azurerm_virtual_machine.example: Creation complete after 59s [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-3235dFFFF4eb/resourceGroups/example-resources/providers/Microsoft.Compute/virtualMachines/example-vm]
+   azurerm_resource_group.lab1: Creating...
+   azurerm_resource_group.lab1: Still creating... [10s elapsed]
+   azurerm_resource_group.lab1: Creation complete after 15s [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFF/resourceGroups/lab1-resources]
+   azurerm_virtual_network.lab1: Creating...
+   azurerm_virtual_network.lab1: Creation complete after 9s [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+   azurerm_subnet.lab1: Creating...
+   azurerm_subnet.lab1: Creation complete after 9s [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+   azurerm_network_interface.lab1: Creating...
+   azurerm_network_interface.lab1: Still creating... [10s elapsed]
+   azurerm_network_interface.lab1: Creation complete after 16s [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
+   azurerm_virtual_machine.lab1: Creating...
+   azurerm_virtual_machine.lab1: Still creating... [10s elapsed]
+   azurerm_virtual_machine.lab1: Still creating... [20s elapsed]
+   azurerm_virtual_machine.lab1: Creation complete after 23s [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
    
    Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
    ```
@@ -568,10 +564,9 @@ az vm list --output table
 ```
 > Returns
 ```powershell
-
-Name        ResourceGroup      Location    Zones
-----------  -----------------  ----------  -------
-example-vm  EXAMPLE-RESOURCES  eastus
+Name     ResourceGroup    Location    Zones
+-------  ---------------  ----------  -------
+lab1-vm  LAB1-RESOURCES   eastus
 ```
 
 ### Destroy
