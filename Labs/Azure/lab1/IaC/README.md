@@ -782,11 +782,32 @@ tofu destroy
 ```
 > Returns
 ```powershell
-azurerm_resource_group.example: Refreshing state... [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-323FFFFF/resourceGroups/example-resources]
+azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources]
 
-No changes. No objects need to be destroyed.
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are
+indicated with the following symbols:
+  - destroy
 
-Either you have not created any objects yet or the existing objects were already deleted outside of OpenTofu.
+OpenTofu will perform the following actions:
 
-Destroy complete! Resources: 0 destroyed.
+  # azurerm_resource_group.lab1 will be destroyed
+  - resource "azurerm_resource_group" "lab1" {
+      - id       = "/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources" -> null
+      - location = "eastus" -> null
+      - name     = "lab1-resources" -> null
+      - tags     = {} -> null
+    }
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy all resources?
+  OpenTofu will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+azurerm_resource_group.lab1: Destroying... [id=/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources]
+azurerm_resource_group.lab1: Destruction complete after 0s
+
+Destroy complete! Resources: 1 destroyed.
 ```
