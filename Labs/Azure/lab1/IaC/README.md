@@ -775,7 +775,7 @@ azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-FFF
 ╵
 ```
 
-- [ ] Had to manually delete the `Resource Group`
+- [ ] Had to manually delete the `Resource Group` because `lab1-os-disk` was not released
 
 ```
 tofu destroy
