@@ -739,6 +739,40 @@ azurerm_resource_group.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF
 azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...dFFFFFFF/resourceGroups/lab1-resources, 10s elapsed]   ```
 ...
 azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...dFFFFFFF/resourceGroups/lab1-resources, 6m50s elapsed]
+...
+azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-...d3FFFFFF/resourceGroups/lab1-resources, 10m0s elapsed]
+╷
+│ Error: deleting Resource Group "lab1-resources": the Resource Group still contains Resources.
+│ 
+│ Terraform is configured to check for Resources within the Resource Group when deleting the Resource Group - and
+│ raise an error if nested Resources still exist to avoid unintentionally deleting these Resources.
+│ 
+│ Terraform has detected that the following Resources still exist within the Resource Group:
+│ 
+│ * `/subscriptions/effa7872-FFFF-4ec6-9e9d-3235d3FFFFFF/resourceGroups/LAB1-RESOURCES/providers/Microsoft.Compute/disks/lab1-os-disk`
+│ 
+│ This feature is intended to avoid the unintentional destruction of nested Resources provisioned through some
+│ other means (for example, an ARM Template Deployment) - as such you must either remove these Resources, or
+│ disable this behaviour using the feature flag `prevent_deletion_if_contains_resources` within the `features`
+│ block when configuring the Provider, for example:
+│ 
+│ provider "azurerm" {
+│   features {
+│     resource_group {
+│       prevent_deletion_if_contains_resources = false
+│     }
+│   }
+│ }
+│ 
+│ When that feature flag is set, Terraform will skip checking for any Resources within the Resource Group and
+│ delete this using the Azure API directly (which will clear up any nested resources).
+│ 
+│ More information on the `features` block can be found in the documentation:
+│ https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/features-block
+│ 
+│ 
+│ 
+╵
 ```
 
 - [ ] Had to manually delete the `Resource Group`
