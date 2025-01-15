@@ -293,14 +293,16 @@ To apply your configuration with the separate files:
    ```
    > Returns
    ```powershell   
-   OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
-   the following symbols:
+   tofu plan
+   
+   OpenTofu used the selected providers to generate the following execution plan. Resource actions are
+   indicated with the following symbols:
      + create
    
    OpenTofu will perform the following actions:
    
-     # azurerm_network_interface.example will be created
-     + resource "azurerm_network_interface" "example" {
+     # azurerm_network_interface.lab1 will be created
+     + resource "azurerm_network_interface" "lab1" {
          + accelerated_networking_enabled = false
          + applied_dns_servers            = (known after apply)
          + id                             = (known after apply)
@@ -308,10 +310,10 @@ To apply your configuration with the separate files:
          + ip_forwarding_enabled          = false
          + location                       = "eastus"
          + mac_address                    = (known after apply)
-         + name                           = "example-nic"
+         + name                           = "lab1-nic"
          + private_ip_address             = (known after apply)
          + private_ip_addresses           = (known after apply)
-         + resource_group_name            = "example-resources"
+         + resource_group_name            = "lab1-resources"
          + virtual_machine_id             = (known after apply)
    
          + ip_configuration {
@@ -325,38 +327,38 @@ To apply your configuration with the separate files:
            }
        }
    
-     # azurerm_resource_group.example will be created
-     + resource "azurerm_resource_group" "example" {
+     # azurerm_resource_group.lab1 will be created
+     + resource "azurerm_resource_group" "lab1" {
          + id       = (known after apply)
          + location = "eastus"
-         + name     = "example-resources"
+         + name     = "lab1-resources"
        }
    
-     # azurerm_subnet.example will be created
-     + resource "azurerm_subnet" "example" {
+     # azurerm_subnet.lab1 will be created
+     + resource "azurerm_subnet" "lab1" {
          + address_prefixes                              = [
              + "10.0.2.0/24",
            ]
          + default_outbound_access_enabled               = true
          + id                                            = (known after apply)
-         + name                                          = "example-subnet"
+         + name                                          = "lab1-subnet"
          + private_endpoint_network_policies             = "Disabled"
          + private_link_service_network_policies_enabled = true
-         + resource_group_name                           = "example-resources"
-         + virtual_network_name                          = "example-vnet"
+         + resource_group_name                           = "lab1-resources"
+         + virtual_network_name                          = "lab1-vnet"
        }
    
-     # azurerm_virtual_machine.example will be created
-     + resource "azurerm_virtual_machine" "example" {
+     # azurerm_virtual_machine.lab1 will be created
+     + resource "azurerm_virtual_machine" "lab1" {
          + availability_set_id              = (known after apply)
          + delete_data_disks_on_termination = false
          + delete_os_disk_on_termination    = false
          + id                               = (known after apply)
          + license_type                     = (known after apply)
          + location                         = "eastus"
-         + name                             = "example-vm"
+         + name                             = "lab1-vm"
          + network_interface_ids            = (known after apply)
-         + resource_group_name              = "example-resources"
+         + resource_group_name              = "lab1-resources"
          + vm_size                          = "Standard_B2s"
    
          + os_profile {
@@ -383,14 +385,14 @@ To apply your configuration with the separate files:
              + disk_size_gb              = (known after apply)
              + managed_disk_id           = (known after apply)
              + managed_disk_type         = "Standard_LRS"
-             + name                      = "example-os-disk"
+             + name                      = "lab1-os-disk"
              + os_type                   = (known after apply)
              + write_accelerator_enabled = false
            }
        }
    
-     # azurerm_virtual_network.example will be created
-     + resource "azurerm_virtual_network" "example" {
+     # azurerm_virtual_network.lab1 will be created
+     + resource "azurerm_virtual_network" "lab1" {
          + address_space                  = [
              + "10.0.0.0/16",
            ]
@@ -398,18 +400,18 @@ To apply your configuration with the separate files:
          + guid                           = (known after apply)
          + id                             = (known after apply)
          + location                       = "eastus"
-         + name                           = "example-vnet"
+         + name                           = "lab1-vnet"
          + private_endpoint_vnet_policies = "Disabled"
-         + resource_group_name            = "example-resources"
+         + resource_group_name            = "lab1-resources"
          + subnet                         = (known after apply)
        }
    
    Plan: 5 to add, 0 to change, 0 to destroy.
    
-   ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+   ──────────────────────────────────────────────────────────────────────────────────────────────────────
    
-   Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly these actions
-   if you run "tofu apply" now.
+   Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly
+   these actions if you run "tofu apply" now.
    ```
 3. Apply:
    ```bash
