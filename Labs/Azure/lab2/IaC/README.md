@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 2. Zip the application files for deployment:
    ```bash
-   zip -r app.zip src/
+   zip -r app.zip src/* -j
    ```
 
 ---
@@ -349,7 +349,7 @@ resource "azurerm_linux_web_app" "lab2_app" {
 After deploying the infrastructure, upload your `app.zip` file to Azure using the Azure CLI:
 
 ```bash
-az webapp deployment source config-zip --resource-group lab2 --name lab2-python-app --src app.zip
+az webapp deploy --resource-group lab2 --name lab2-python-app --src-path app.zip --type zip
 ```
 > Returns
 ```powershell
@@ -409,8 +409,10 @@ This configuration is simple, scalable, and can be extended to include databases
 You can delete all deployed files by resetting the deployment source:
 
 ```bash
-az webapp deployment reset-configuration --name lab2-python-app --resource-group lab2
+
 ```
+> az webapp deployment reset-configuration --name lab2-python-app --resource-group lab2
+
 
 This command clears out the deployment files and resets the app configuration.
 
