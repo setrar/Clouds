@@ -459,4 +459,169 @@ After performing any of the above steps, verify that the app is no longer access
    az webapp show --name lab2-python-app --resource-group lab2
    ```
 
-If the app still exists, let me know for further troubleshooting!
+## Destroy the service
+
+```
+tofu destroy
+```
+> Returns
+```powershell
+azurerm_resource_group.lab2_rg: Refreshing state... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2]
+azurerm_service_plan.lab2_plan: Refreshing state... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/serverFarms/lab2-plan]
+azurerm_linux_web_app.lab2_app: Refreshing state... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/sites/lab2-python-app]
+
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  - destroy
+
+OpenTofu will perform the following actions:
+
+  # azurerm_linux_web_app.lab2_app will be destroyed
+  - resource "azurerm_linux_web_app" "lab2_app" {
+      - app_settings                                   = {
+          - "FUNCTIONS_WORKER_RUNTIME" = "python"
+          - "WEBSITE_RUN_FROM_PACKAGE" = "1"
+        } -> null
+      - client_affinity_enabled                        = false -> null
+      - client_certificate_enabled                     = false -> null
+      - client_certificate_mode                        = "Required" -> null
+      - custom_domain_verification_id                  = (sensitive value) -> null
+      - default_hostname                               = "lab2-python-app.azurewebsites.net" -> null
+      - enabled                                        = true -> null
+      - ftp_publish_basic_authentication_enabled       = true -> null
+      - https_only                                     = false -> null
+      - id                                             = "/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/sites/lab2-python-app" -> null
+      - key_vault_reference_identity_id                = "SystemAssigned" -> null
+      - kind                                           = "app,linux" -> null
+      - location                                       = "eastus" -> null
+      - name                                           = "lab2-python-app" -> null
+      - outbound_ip_address_list                       = [
+          - "20.185.79.171",
+          - "20.185.79.228",
+          - "52.142.24.25",
+          - "52.142.24.214",
+          - "52.142.25.94",
+          - "52.142.25.191",
+          - "20.119.16.38",
+        ] -> null
+      - outbound_ip_addresses                          = "20.185.79.171,20.185.79.228,52.142.24.25,52.142.24.214,52.142.25.94,52.142.25.191,20.119.16.38" -> null
+      - possible_outbound_ip_address_list              = [
+          - "20.185.79.171",
+          - "20.185.79.228",
+          - "52.142.24.25",
+          - "52.142.24.214",
+          - "52.142.25.94",
+          - "52.142.25.191",
+          - "52.142.25.234",
+          - "52.142.26.82",
+          - "52.142.26.128",
+          - "52.142.26.160",
+          - "52.142.27.2",
+          - "52.142.27.55",
+          - "52.142.27.122",
+          - "52.142.27.205",
+          - "52.142.27.237",
+          - "52.142.28.18",
+          - "52.142.28.108",
+          - "52.142.28.113",
+          - "52.142.28.144",
+          - "52.142.28.251",
+          - "52.142.29.15",
+          - "52.142.29.52",
+          - "52.142.29.75",
+          - "52.151.226.227",
+          - "20.119.16.38",
+        ] -> null
+      - possible_outbound_ip_addresses                 = "20.185.79.171,20.185.79.228,52.142.24.25,52.142.24.214,52.142.25.94,52.142.25.191,52.142.25.234,52.142.26.82,52.142.26.128,52.142.26.160,52.142.27.2,52.142.27.55,52.142.27.122,52.142.27.205,52.142.27.237,52.142.28.18,52.142.28.108,52.142.28.113,52.142.28.144,52.142.28.251,52.142.29.15,52.142.29.52,52.142.29.75,52.151.226.227,20.119.16.38" -> null
+      - public_network_access_enabled                  = true -> null
+      - resource_group_name                            = "lab2" -> null
+      - service_plan_id                                = "/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/serverFarms/lab2-plan" -> null
+      - site_credential                                = (sensitive value) -> null
+      - tags                                           = {} -> null
+      - webdeploy_publish_basic_authentication_enabled = true -> null
+
+      - site_config {
+          - always_on                               = true -> null
+          - container_registry_use_managed_identity = false -> null
+          - default_documents                       = [
+              - "Default.htm",
+              - "Default.html",
+              - "Default.asp",
+              - "index.htm",
+              - "index.html",
+              - "iisstart.htm",
+              - "default.aspx",
+              - "index.php",
+              - "hostingstart.html",
+            ] -> null
+          - detailed_error_logging_enabled          = false -> null
+          - ftps_state                              = "Disabled" -> null
+          - health_check_eviction_time_in_min       = 0 -> null
+          - http2_enabled                           = false -> null
+          - ip_restriction_default_action           = "Allow" -> null
+          - linux_fx_version                        = "PYTHON|3.9" -> null
+          - load_balancing_mode                     = "LeastRequests" -> null
+          - local_mysql_enabled                     = false -> null
+          - managed_pipeline_mode                   = "Integrated" -> null
+          - minimum_tls_version                     = "1.2" -> null
+          - remote_debugging_enabled                = false -> null
+          - remote_debugging_version                = "VS2022" -> null
+          - scm_ip_restriction_default_action       = "Allow" -> null
+          - scm_minimum_tls_version                 = "1.2" -> null
+          - scm_type                                = "None" -> null
+          - scm_use_main_ip_restriction             = false -> null
+          - use_32_bit_worker                       = true -> null
+          - vnet_route_all_enabled                  = false -> null
+          - websockets_enabled                      = false -> null
+          - worker_count                            = 1 -> null
+
+          - application_stack {
+              - python_version = "3.9" -> null
+            }
+        }
+    }
+
+  # azurerm_resource_group.lab2_rg will be destroyed
+  - resource "azurerm_resource_group" "lab2_rg" {
+      - id       = "/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2" -> null
+      - location = "eastus" -> null
+      - name     = "lab2" -> null
+      - tags     = {} -> null
+    }
+
+  # azurerm_service_plan.lab2_plan will be destroyed
+  - resource "azurerm_service_plan" "lab2_plan" {
+      - id                           = "/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/serverFarms/lab2-plan" -> null
+      - kind                         = "linux" -> null
+      - location                     = "eastus" -> null
+      - maximum_elastic_worker_count = 1 -> null
+      - name                         = "lab2-plan" -> null
+      - os_type                      = "Linux" -> null
+      - per_site_scaling_enabled     = false -> null
+      - reserved                     = true -> null
+      - resource_group_name          = "lab2" -> null
+      - sku_name                     = "B1" -> null
+      - tags                         = {} -> null
+      - worker_count                 = 1 -> null
+      - zone_balancing_enabled       = false -> null
+    }
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Do you really want to destroy all resources?
+  OpenTofu will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+azurerm_linux_web_app.lab2_app: Destroying... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/sites/lab2-python-app]
+azurerm_linux_web_app.lab2_app: Still destroying... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-...rs/Microsoft.Web/sites/lab2-python-app, 10s elapsed]
+azurerm_linux_web_app.lab2_app: Destruction complete after 11s
+azurerm_service_plan.lab2_plan: Destroying... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/serverFarms/lab2-plan]
+azurerm_service_plan.lab2_plan: Destruction complete after 10s
+azurerm_resource_group.lab2_rg: Destroying... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2]
+azurerm_resource_group.lab2_rg: Still destroying... [id=/subscriptions/effa7872-28FF-4FF6-9e9d-32FFFFFFFFFFb/resourceGroups/lab2, 10s elapsed]
+azurerm_resource_group.lab2_rg: Destruction complete after 19s
+
+Destroy complete! Resources: 3 destroyed.
+```
