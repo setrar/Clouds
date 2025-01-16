@@ -349,7 +349,35 @@ resource "azurerm_linux_web_app" "lab2_app" {
 After deploying the infrastructure, upload your `app.zip` file to Azure using the Azure CLI:
 
 ```bash
-az webapp deploy --resource-group lab2 --name lab2-python-app --src-path app.zip
+az webapp deployment source config-zip --resource-group lab2 --name lab2-python-app --src app.zip
+```
+> Returns
+```powershell
+This command has been deprecated and will be removed in a future release. Use 'az webapp deploy' instead.
+Getting scm site credentials for zip deployment
+Starting zip deployment. This operation can take a while to complete ...
+Deployment endpoint responded with status code 202
+Polling the status of async deployment. Start Time: 2025-01-16 17:07:13.138452+00:00 UTC
+Status: Build successful. Time: 1(s)
+Status: Starting the site... Time: 17(s)
+Status: Starting the site... Time: 33(s)
+Status: Site started successfully. Time: 48(s)
+{
+  "id": "/subscriptions/effa7872-2FF0-4FFF-9e9d-3FFFFFFFFFFFb/resourceGroups/lab2/providers/Microsoft.Web/sites/lab2-python-app/deploymentStatus/6649a2f5-4b04-48a8-9a2a-18b2701863ef",
+  "location": "East US",
+  "name": "6649a2f5-4b04-48a8-9a2a-18b2701863ef",
+  "properties": {
+    "deploymentId": "6649a2f5-4b04-48a8-9a2a-18b2701863ef",
+    "errors": null,
+    "failedInstancesLogs": null,
+    "numberOfInstancesFailed": 0,
+    "numberOfInstancesInProgress": 0,
+    "numberOfInstancesSuccessful": 1,
+    "status": "RuntimeSuccessful"
+  },
+  "resourceGroup": "lab2",
+  "type": "Microsoft.Web/sites/deploymentStatus"
+}
 ```
 
 ---
