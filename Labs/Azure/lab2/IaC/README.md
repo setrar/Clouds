@@ -401,3 +401,60 @@ Visit the URL in your browser to see the Python microservice in action.
 4. **CI/CD Pipeline**: Use GitHub Actions or Azure DevOps for automated deployments.
 
 This configuration is simple, scalable, and can be extended to include databases or integrate with other Azure services.
+
+---
+
+### **Step 12: Delete Deployed Files from Azure App Service**
+#### **1. Use the Azure CLI to Reset the Deployment**
+You can delete all deployed files by resetting the deployment source:
+
+```bash
+az webapp deployment reset-configuration --name lab2-python-app --resource-group lab2
+```
+
+This command clears out the deployment files and resets the app configuration.
+
+---
+
+#### **2. Use Kudu Console to Manually Delete Files**
+1. Access the Kudu Console:
+   - Open: `https://<your-app-name>.scm.azurewebsites.net/`.
+   - Replace `<your-app-name>` with `lab2-python-app`.
+
+2. Delete All Files:
+   - Navigate to the `site/wwwroot` directory.
+   - Delete all files by running:
+     ```bash
+     rm -rf site/wwwroot/*
+     ```
+
+---
+
+#### **3. Delete via Azure Portal**
+1. Open **Azure Portal**.
+2. Navigate to **App Services** > Select your app (**lab2-python-app**).
+3. Open **Development Tools > Advanced Tools (Kudu)**.
+4. Go to the `site/wwwroot` directory and manually delete all files.
+
+---
+
+### **To Completely Remove the Web App**
+If you want to delete the web app entirely (along with the deployment), use the following command:
+
+```bash
+az webapp delete --name lab2-python-app --resource-group lab2
+```
+
+This deletes the entire app, including its deployment, configuration, and associated resources.
+
+---
+
+### **Verify the Deletion**
+After performing any of the above steps, verify that the app is no longer accessible:
+1. Try accessing the app’s URL in your browser.
+2. Use the CLI to check its status:
+   ```bash
+   az webapp show --name lab2-python-app --resource-group lab2
+   ```
+
+If the app still exists, let me know for further troubleshooting!
