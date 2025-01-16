@@ -85,6 +85,25 @@ resource "azurerm_linux_web_app" "lab2_app" {
    ```bash
    tofu init
    ```
+   > Returns
+   ```powershell
+       
+    Initializing the backend...
+    
+    Initializing provider plugins...
+    - Reusing previous version of hashicorp/azurerm from the dependency lock file
+    - Using previously-installed hashicorp/azurerm v4.15.0
+    
+    OpenTofu has been successfully initialized!
+    
+    You may now begin working with OpenTofu. Try running "tofu plan" to see
+    any changes that are required for your infrastructure. All OpenTofu commands
+    should now work.
+    
+    If you ever set or change modules or backend configuration for OpenTofu,
+    rerun this command to reinitialize your working directory. If you forget, other
+    commands will detect it and remind you to do so if necessary.
+    ```
 
 2. Validate the configuration:
    ```bash
