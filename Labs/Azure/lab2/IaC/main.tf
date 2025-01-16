@@ -1,66 +1,35 @@
-resource "azurerm_resource_group" "lab2" {
-  name     = "lab2-resources"
+# Define Resource Group
+resource "azurerm_resource_group" "lab2_rg" {
+  name     = "lab2"
   location = "East US"
 }
 
-resource "azurerm_virtual_machine" "lab2" {
-  name                  = "lab2-vm"
-  location              = azurerm_resource_group.lab2.location
-  resource_group_name   = azurerm_resource_group.lab2.name
-  vm_size               = "Standard_B2s"
-
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "18.04-LTS"
-    version   = "latest"
-  }
-
-  storage_os_disk {
-    name              = "lab2-os-disk"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  os_profile {
-    computer_name  = "lab2-vm"
-    admin_username = "azureuser"
-    admin_password = "P@ssw0rd123!"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-
-  network_interface_ids = [
-    azurerm_network_interface.lab2.id,
-  ]
+# Define Service Plan
+resource "azurerm_service_plan" "lab2_plan" {
+  name                = "lab2-plan"
+  location            = azurerm_resource_group.lab2_rg.location
+  resource_group_name = azurerm_resource_group.lab2_rg.name
+  os_type             = "Linux"          # Required OS type
+  sku_name            = "B1"             # Specify the SKU name (e.g., B1 for Basic tier)
 }
 
-resource "azurerm_network_interface" "lab2" {
-  name                = "lab2-nic"
-  location            = azurerm_resource_group.lab2.location
-  resource_group_name = azurerm_resource_group.lab2.name
+# Define Linux Web App for Python
+resource "azurerm_linux_web_app" "lab2_app" {
+  name                = "lab2-python-app"
+  location            = azurerm_resource_group.lab2_rg.location
+  resource_group_name = azurerm_resource_group.lab2_rg.name
+  service_plan_id     = azurerm_service_plan.lab2_plan.id
 
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = azurerm_subnet.lab2.id
-    private_ip_address_allocation = "Dynamic"
+  site_config {
+    always_on          = true
+    application_stack {
+      python_version = "3.9" # Specify Python version
+    }
   }
-}
 
-resource "azurerm_virtual_network" "lab2" {
-  name                = "lab2-vnet"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.lab2.location
-  resource_group_name = azurerm_resource_group.lab2.name
-}
-
-resource "azurerm_subnet" "lab2" {
-  name                 = "lab2-subnet"
-  resource_group_name  = azurerm_resource_group.lab2.name
-  virtual_network_name = azurerm_virtual_network.lab2.name
-  address_prefixes     = ["10.0.2.0/24"]
+  app_settings = {
+    FUNCTIONS_WORKER_RUNTIME = "python" # Specify runtime
+    WEBSITE_RUN_FROM_PACKAGE = "1"     # Enable deployment from package
+  }
 }
 
