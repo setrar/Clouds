@@ -34,7 +34,7 @@ if __name__ == "__main__":
 
 2. Zip the application files for deployment:
    ```bash
-   zip -r app.zip src/ -j
+   zip -r app.zip src/* -j
    ```
 
 ---
@@ -350,7 +350,6 @@ After deploying the infrastructure, upload your `app.zip` file to Azure using th
 
 ```bash
 az webapp deploy --resource-group lab2 --name lab2-python-app --src-path app.zip --type zip
-az webapp deployment source config-zip --resource-group lab2 --name lab2-python-app --src app.zip
 ```
 > Returns
 ```powershell
