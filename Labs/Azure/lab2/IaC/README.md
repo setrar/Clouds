@@ -388,6 +388,7 @@ Retrieve the public URL of the deployed app:
 ```bash
 az webapp show --name lab2-python-app --resource-group lab2 --query "defaultHostName" -o tsv
 ```
+> lab2-python-app.azurewebsites.net
 
 Visit the URL in your browser to see the Python microservice in action.
 
