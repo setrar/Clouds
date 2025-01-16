@@ -109,11 +109,113 @@ resource "azurerm_linux_web_app" "lab2_app" {
    ```bash
    tofu validate
    ```
+   > Success! The configuration is valid.
 
 3. Plan the deployment:
    ```bash
    tofu plan
    ```
+   > Returns
+    ```powershell
+    azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-28FF-4eFF-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources]
+    azurerm_virtual_network.lab1: Refreshing state... [id=/subscriptions/effa7872-28FF-4eFF-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+    
+    OpenTofu used the selected providers to generate the following execution plan. Resource actions are
+    indicated with the following symbols:
+      + create
+    
+    OpenTofu will perform the following actions:
+    
+      # azurerm_linux_web_app.lab2_app will be created
+      + resource "azurerm_linux_web_app" "lab2_app" {
+          + app_settings                                   = {
+              + "FUNCTIONS_WORKER_RUNTIME" = "python"
+              + "WEBSITE_RUN_FROM_PACKAGE" = "1"
+            }
+          + client_affinity_enabled                        = false
+          + client_certificate_enabled                     = false
+          + client_certificate_mode                        = "Required"
+          + custom_domain_verification_id                  = (sensitive value)
+          + default_hostname                               = (known after apply)
+          + enabled                                        = true
+          + ftp_publish_basic_authentication_enabled       = true
+          + hosting_environment_id                         = (known after apply)
+          + https_only                                     = false
+          + id                                             = (known after apply)
+          + key_vault_reference_identity_id                = (known after apply)
+          + kind                                           = (known after apply)
+          + location                                       = "eastus"
+          + name                                           = "lab2-python-app"
+          + outbound_ip_address_list                       = (known after apply)
+          + outbound_ip_addresses                          = (known after apply)
+          + possible_outbound_ip_address_list              = (known after apply)
+          + possible_outbound_ip_addresses                 = (known after apply)
+          + public_network_access_enabled                  = true
+          + resource_group_name                            = "lab2"
+          + service_plan_id                                = (known after apply)
+          + site_credential                                = (sensitive value)
+          + webdeploy_publish_basic_authentication_enabled = true
+          + zip_deploy_file                                = (known after apply)
+    
+          + site_config {
+              + always_on                               = true
+              + container_registry_use_managed_identity = false
+              + default_documents                       = (known after apply)
+              + detailed_error_logging_enabled          = (known after apply)
+              + ftps_state                              = "Disabled"
+              + http2_enabled                           = false
+              + ip_restriction_default_action           = "Allow"
+              + linux_fx_version                        = (known after apply)
+              + load_balancing_mode                     = "LeastRequests"
+              + local_mysql_enabled                     = false
+              + managed_pipeline_mode                   = "Integrated"
+              + minimum_tls_version                     = "1.2"
+              + remote_debugging_enabled                = false
+              + remote_debugging_version                = (known after apply)
+              + scm_ip_restriction_default_action       = "Allow"
+              + scm_minimum_tls_version                 = "1.2"
+              + scm_type                                = (known after apply)
+              + scm_use_main_ip_restriction             = false
+              + use_32_bit_worker                       = true
+              + vnet_route_all_enabled                  = false
+              + websockets_enabled                      = false
+              + worker_count                            = (known after apply)
+    
+              + application_stack {
+                  + python_version = "3.9"
+                }
+            }
+        }
+    
+      # azurerm_resource_group.lab2_rg will be created
+      + resource "azurerm_resource_group" "lab2_rg" {
+          + id       = (known after apply)
+          + location = "eastus"
+          + name     = "lab2"
+        }
+    
+      # azurerm_service_plan.lab2_plan will be created
+      + resource "azurerm_service_plan" "lab2_plan" {
+          + id                           = (known after apply)
+          + kind                         = (known after apply)
+          + location                     = "eastus"
+          + maximum_elastic_worker_count = (known after apply)
+          + name                         = "lab2-plan"
+          + os_type                      = "Linux"
+          + per_site_scaling_enabled     = false
+          + reserved                     = (known after apply)
+          + resource_group_name          = "lab2"
+          + sku_name                     = "B1"
+          + worker_count                 = (known after apply)
+        }
+    
+    Plan: 3 to add, 0 to change, 0 to destroy.
+    
+    ──────────────────────────────────────────────────────────────────────────────────────────────────────
+    
+    Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly
+    these actions if you run "tofu apply" now.
+    ```
 
 4. Apply the deployment:
    ```bash
