@@ -1127,12 +1127,12 @@ az vm list-ip-addresses --resource-group lab1-resources --output table
 
 VirtualMachine    PublicIPAddresses    PrivateIPAddresses
 ----------------  -------------------  --------------------
-lab1-vm           172.191.193.25       10.0.1.4
+lab1-vm           172.191.25.162       10.0.1.4
 ```
 
 * Use the public IP address
 
 ```
-ssh azureuser@172.191.193.25
+ssh azureuser@172.191.25.162
 ```
 
