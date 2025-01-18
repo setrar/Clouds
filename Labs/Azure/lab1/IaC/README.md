@@ -780,13 +780,13 @@ To apply your configuration with the separate files:
 This setup is modular and easy to manage, especially in larger projects.
 
 ```
-az vm list --output table
+az vm list-ip-addresses --resource-group lab1-resources --output table
 ```
 > Returns
 ```powershell
-Name     ResourceGroup    Location    Zones
--------  ---------------  ----------  -------
-lab1-vm  LAB1-RESOURCES   eastus
+VirtualMachine    PublicIPAddresses    PrivateIPAddresses
+----------------  -------------------  --------------------
+lab1-vm           172.191.25.162       10.0.1.4
 ```
 
 ### Destroy
