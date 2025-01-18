@@ -105,8 +105,28 @@ write_files:
         console.log(`Server is running on http://localhost:${PORT}`);
       });
 
+  # Systemd Service for Node.js Application
+  - owner: root:root
+    path: /etc/systemd/system/myapp.service
+    defer: true
+    content: |
+      [Unit]
+      Description=Node.js Application
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/bin/node /home/azureuser/myapp/index.js
+      Restart=always
+      User=azureuser
+      Group=azureuser
+      Environment=PATH=/usr/bin:/usr/local/bin
+      WorkingDirectory=/home/azureuser/myapp
+
+      [Install]
+      WantedBy=multi-user.target
+
 runcmd:
-  # Restart NGINX to apply configuration
+  # Ensure NGINX is restarted with the updated configuration
   - systemctl restart nginx
 
   # Set up Node.js application
@@ -115,6 +135,8 @@ runcmd:
   - cd /home/azureuser/myapp
   - npm install express
 
-  # Start Node.js application
-  - node /home/azureuser/myapp/index.js
+  # Enable and start the Node.js application as a systemd service
+  - systemctl daemon-reload
+  - systemctl enable myapp
+  - systemctl start myapp
 

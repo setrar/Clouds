@@ -3,3 +3,8 @@ variable "subscription_id" {
   type        = string
 }
 
+variable "vm_size" {
+  default     = "Standard_B1ls"  # Free tier or low-cost instance
+  description = "The size of the virtual machine."
+}
+
