@@ -339,16 +339,70 @@ To apply your configuration with the separate files:
    ```
    > Returns
    ```powershell   
-   tofu plan
    
-   OpenTofu used the selected providers to generate the following execution plan. Resource actions are
-   indicated with the following symbols:
+   OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+   the following symbols:
      + create
    
    OpenTofu will perform the following actions:
    
-     # azurerm_network_interface.lab1 will be created
-     + resource "azurerm_network_interface" "lab1" {
+     # azurerm_linux_virtual_machine.lab1_vm will be created
+     + resource "azurerm_linux_virtual_machine" "lab1_vm" {
+         + admin_username                                         = "azureuser"
+         + allow_extension_operations                             = true
+         + bypass_platform_safety_checks_on_user_schedule_enabled = false
+         + computer_name                                          = (known after apply)
+         + custom_data                                            = (sensitive value)
+         + disable_password_authentication                        = true
+         + disk_controller_type                                   = (known after apply)
+         + extensions_time_budget                                 = "PT1H30M"
+         + id                                                     = (known after apply)
+         + location                                               = "eastus"
+         + max_bid_price                                          = -1
+         + name                                                   = "lab1-vm"
+         + network_interface_ids                                  = (known after apply)
+         + patch_assessment_mode                                  = "ImageDefault"
+         + patch_mode                                             = "ImageDefault"
+         + platform_fault_domain                                  = -1
+         + priority                                               = "Regular"
+         + private_ip_address                                     = (known after apply)
+         + private_ip_addresses                                   = (known after apply)
+         + provision_vm_agent                                     = true
+         + public_ip_address                                      = (known after apply)
+         + public_ip_addresses                                    = (known after apply)
+         + resource_group_name                                    = "lab1-resources"
+         + size                                                   = "Standard_B1ls"
+         + virtual_machine_id                                     = (known after apply)
+         + vm_agent_platform_updates_enabled                      = false
+   
+         + admin_ssh_key {
+             + public_key = <<-EOT
+                   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONOtoMa5/y6apillwwATeBV2HivPitn1OkfZlJKHwD+R+jHToz+bfx5RnGspH/5VwdWfFJiOKPYUxhYY7pxDBLQ04dD6LbizqE1OtF1voX9uFUbTcPkrMRUr9lg7Qrl/UefWGFbaaTcaJ0eNRqKlZQJ7IToU16Bdxjfwv0eg41aAOUjICH+sMaBBIttWM27kwSdaiaT3/tWaC0FrNYNUAm08ibP7FtNJelYXe5Crt0ttXCN/rFZkqfb5NdPupyCMnPKKq0lar8zZ3RMKoNZFhCvQ2D4IJXPs7Px9PeCdWb3/3YKGjy7WaHXT+cR7jJL+S+JnkdwXJHAGJrDdpKN6uBUTA5jK/86FHlap26YJDqg7+QGmD62GhTVKVLLF1W4uYEycN4eSj/aZ21LZIcVmbHp8hnzMibKIfOnYf3HurXFK8TRPLM3nJtWpKRJ6nVj+92/BNp5G9Vwy97J/FvO5/DLj72haC/Jli6N8Sc5h83japn3A6Zu327HAdBqWZNwM= robert@saipal.eurecom.fr
+               EOT
+             + username   = "azureuser"
+           }
+   
+         + os_disk {
+             + caching                   = "ReadWrite"
+             + disk_size_gb              = (known after apply)
+             + id                        = (known after apply)
+             + name                      = (known after apply)
+             + storage_account_type      = "Standard_LRS"
+             + write_accelerator_enabled = false
+           }
+   
+         + source_image_reference {
+             + offer     = "UbuntuServer"
+             + publisher = "Canonical"
+             + sku       = "18.04-LTS"
+             + version   = "latest"
+           }
+   
+         + termination_notification (known after apply)
+       }
+   
+     # azurerm_network_interface.lab1_nic will be created
+     + resource "azurerm_network_interface" "lab1_nic" {
          + accelerated_networking_enabled = false
          + applied_dns_servers            = (known after apply)
          + id                             = (known after apply)
@@ -369,8 +423,71 @@ To apply your configuration with the separate files:
              + private_ip_address                                 = (known after apply)
              + private_ip_address_allocation                      = "Dynamic"
              + private_ip_address_version                         = "IPv4"
+             + public_ip_address_id                               = (known after apply)
              + subnet_id                                          = (known after apply)
            }
+       }
+   
+     # azurerm_network_security_group.lab1_nsg will be created
+     + resource "azurerm_network_security_group" "lab1_nsg" {
+         + id                  = (known after apply)
+         + location            = "eastus"
+         + name                = "lab1-nsg"
+         + resource_group_name = "lab1-resources"
+         + security_rule       = [
+             + {
+                 + access                                     = "Allow"
+                 + description                                = ""
+                 + destination_address_prefix                 = "*"
+                 + destination_address_prefixes               = []
+                 + destination_application_security_group_ids = []
+                 + destination_port_range                     = "22"
+                 + destination_port_ranges                    = []
+                 + direction                                  = "Inbound"
+                 + name                                       = "AllowSSH"
+                 + priority                                   = 1000
+                 + protocol                                   = "Tcp"
+                 + source_address_prefix                      = "*"
+                 + source_address_prefixes                    = []
+                 + source_application_security_group_ids      = []
+                 + source_port_range                          = "*"
+                 + source_port_ranges                         = []
+               },
+             + {
+                 + access                                     = "Allow"
+                 + description                                = ""
+                 + destination_address_prefix                 = "*"
+                 + destination_address_prefixes               = []
+                 + destination_application_security_group_ids = []
+                 + destination_port_range                     = "80"
+                 + destination_port_ranges                    = []
+                 + direction                                  = "Inbound"
+                 + name                                       = "AllowHTTP"
+                 + priority                                   = 1001
+                 + protocol                                   = "Tcp"
+                 + source_address_prefix                      = "*"
+                 + source_address_prefixes                    = []
+                 + source_application_security_group_ids      = []
+                 + source_port_range                          = "*"
+                 + source_port_ranges                         = []
+               },
+           ]
+       }
+   
+     # azurerm_public_ip.lab1_public_ip will be created
+     + resource "azurerm_public_ip" "lab1_public_ip" {
+         + allocation_method       = "Static"
+         + ddos_protection_mode    = "VirtualNetworkInherited"
+         + fqdn                    = (known after apply)
+         + id                      = (known after apply)
+         + idle_timeout_in_minutes = 4
+         + ip_address              = (known after apply)
+         + ip_version              = "IPv4"
+         + location                = "eastus"
+         + name                    = "lab1-public-ip"
+         + resource_group_name     = "lab1-resources"
+         + sku                     = "Standard"
+         + sku_tier                = "Regional"
        }
    
      # azurerm_resource_group.lab1 will be created
@@ -380,10 +497,10 @@ To apply your configuration with the separate files:
          + name     = "lab1-resources"
        }
    
-     # azurerm_subnet.lab1 will be created
-     + resource "azurerm_subnet" "lab1" {
+     # azurerm_subnet.lab1_subnet will be created
+     + resource "azurerm_subnet" "lab1_subnet" {
          + address_prefixes                              = [
-             + "10.0.2.0/24",
+             + "10.0.1.0/24",
            ]
          + default_outbound_access_enabled               = true
          + id                                            = (known after apply)
@@ -394,51 +511,15 @@ To apply your configuration with the separate files:
          + virtual_network_name                          = "lab1-vnet"
        }
    
-     # azurerm_virtual_machine.lab1 will be created
-     + resource "azurerm_virtual_machine" "lab1" {
-         + availability_set_id              = (known after apply)
-         + delete_data_disks_on_termination = false
-         + delete_os_disk_on_termination    = false
-         + id                               = (known after apply)
-         + license_type                     = (known after apply)
-         + location                         = "eastus"
-         + name                             = "lab1-vm"
-         + network_interface_ids            = (known after apply)
-         + resource_group_name              = "lab1-resources"
-         + vm_size                          = "Standard_B2s"
-   
-         + os_profile {
-             # At least one attribute in this block is (or was) sensitive,
-             # so its contents will not be displayed.
-           }
-   
-         + os_profile_linux_config {
-             + disable_password_authentication = false
-           }
-   
-         + storage_data_disk (known after apply)
-   
-         + storage_image_reference {
-             + offer     = "UbuntuServer"
-             + publisher = "Canonical"
-             + sku       = "18.04-LTS"
-             + version   = "latest"
-           }
-   
-         + storage_os_disk {
-             + caching                   = "ReadWrite"
-             + create_option             = "FromImage"
-             + disk_size_gb              = (known after apply)
-             + managed_disk_id           = (known after apply)
-             + managed_disk_type         = "Standard_LRS"
-             + name                      = "lab1-os-disk"
-             + os_type                   = (known after apply)
-             + write_accelerator_enabled = false
-           }
+     # azurerm_subnet_network_security_group_association.lab1_subnet_nsg will be created
+     + resource "azurerm_subnet_network_security_group_association" "lab1_subnet_nsg" {
+         + id                        = (known after apply)
+         + network_security_group_id = (known after apply)
+         + subnet_id                 = (known after apply)
        }
    
-     # azurerm_virtual_network.lab1 will be created
-     + resource "azurerm_virtual_network" "lab1" {
+     # azurerm_virtual_network.lab1_vnet will be created
+     + resource "azurerm_virtual_network" "lab1_vnet" {
          + address_space                  = [
              + "10.0.0.0/16",
            ]
@@ -452,13 +533,14 @@ To apply your configuration with the separate files:
          + subnet                         = (known after apply)
        }
    
-   Plan: 5 to add, 0 to change, 0 to destroy.
+   Plan: 8 to add, 0 to change, 0 to destroy.
    
-   ──────────────────────────────────────────────────────────────────────────────────────────────────────
+   ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
    
-   Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly
-   these actions if you run "tofu apply" now.
+   Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly these actions
+   if you run "tofu apply" now.
    ```
+
 3. Apply:
    ```bash
    tofu apply
