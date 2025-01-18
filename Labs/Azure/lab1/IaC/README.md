@@ -1071,6 +1071,50 @@ azurerm_resource_group.lab1: Destruction complete after 22s
 Destroy complete! Resources: 8 destroyed.
 ```
 
+## Resize the VM
+
+```
+tofu plan
+```
+> Returns
+```powershell
+azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources]
+azurerm_network_security_group.lab1_nsg: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg]
+azurerm_managed_disk.standard_ssd_disk: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/standard-ssd-disk]
+azurerm_virtual_network.lab1_vnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+azurerm_public_ip.lab1_public_ip: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip]
+azurerm_managed_disk.premium_ssd_disk: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/premium-ssd-disk]
+azurerm_subnet.lab1_subnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_subnet_network_security_group_association.lab1_subnet_nsg: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_network_interface.lab1_nic: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
+azurerm_linux_virtual_machine.lab1_vm: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  ~ update in-place
+
+OpenTofu will perform the following actions:
+
+  # azurerm_linux_virtual_machine.lab1_vm will be updated in-place
+  ~ resource "azurerm_linux_virtual_machine" "lab1_vm" {
+        id                                                     = "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm"
+        name                                                   = "lab1-vm"
+      ~ size                                                   = "Standard_DS2_v2" -> "Standard_B1ls"
+        tags                                                   = {}
+        # (25 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so OpenTofu can't guarantee to take exactly these actions
+if you run "tofu apply" now.
+```
+
+
 # References
 
 ## Cloud-Init
