@@ -4,25 +4,44 @@ packages:
   - nginx
   - nodejs
   - npm
+
 write_files:
+  # NGINX Configuration for Reverse Proxy
   - owner: www-data:www-data
     path: /etc/nginx/sites-available/default
     defer: true
     content: |
-      var express = require('express');
-      var app = express();
-      var os = require('os');
-    
-      // Middleware for logging requests
+      server {
+        listen 80;
+        location / {
+          proxy_pass http://localhost:3000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection 'upgrade';
+          proxy_set_header Host $host;
+          proxy_cache_bypass $http_upgrade;
+        }
+      }
+
+  # Node.js Application Code
+  - owner: azureuser:azureuser
+    path: /home/azureuser/myapp/index.js
+    defer: true
+    content: |
+      const express = require('express');
+      const app = express();
+      const os = require('os');
+
+      // Middleware for logging
       app.use((req, res, next) => {
         console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
         next();
       });
-    
-      // Serve the main page
-      app.get('/', function (req, res) {
+
+      // Main Route
+      app.get('/', (req, res) => {
         const hostname = os.hostname();
-        const html = `
+        res.send(`
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -70,36 +89,30 @@ write_files:
             </footer>
           </body>
           </html>
-        `;
-        res.send(html);
+        `);
       });
-    
-      // Handle 404 errors
+
+      // 404 Route
       app.use((req, res) => {
         res.status(404).send('404: Page Not Found');
       });
-    
-      // Start the server
+
+      // Start Server
       const PORT = 3000;
-      app.listen(PORT, function () {
-        console.log(`Server is running on http://${os.hostname()}:${PORT}`);
+      app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
       });
-  - owner: azureuser:azureuser
-    path: /home/azureuser/myapp/index.js
-    defer: true
-    content: |
-      var express = require('express')
-      var app = express()
-      var os = require('os');
-      app.get('/', function (req, res) {
-        res.send('Hello World from host ' + os.hostname() + '!')
-      })
-      app.listen(3000, function () {
-        console.log('Hello world app listening on port 3000!')
-      })
+
 runcmd:
-  - service nginx restart
-  - cd "/home/azureuser/myapp"
-  - npm init
-  - npm install express -y
-  - nodejs index.js
+  # Restart NGINX to apply configuration
+  - systemctl restart nginx
+
+  # Set up Node.js application
+  - mkdir -p /home/azureuser/myapp
+  - chown -R azureuser:azureuser /home/azureuser/myapp
+  - cd /home/azureuser/myapp
+  - npm install express
+
+  # Start Node.js application
+  - node /home/azureuser/myapp/index.js
+
