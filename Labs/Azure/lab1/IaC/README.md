@@ -622,62 +622,192 @@ lab1-vm  LAB1-RESOURCES   eastus
    ```
    > Returns
    ```powershell
-azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources]
-azurerm_virtual_network.lab1: Refreshing state... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
-azurerm_subnet.lab1: Refreshing state... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
-azurerm_network_interface.lab1: Refreshing state... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
-azurerm_virtual_machine.lab1: Refreshing state... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources]
+azurerm_public_ip.lab1_public_ip: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip]
+azurerm_virtual_network.lab1_vnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+azurerm_network_security_group.lab1_nsg: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg]
+azurerm_subnet.lab1_subnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_subnet_network_security_group_association.lab1_subnet_nsg: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_network_interface.lab1_nic: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
+azurerm_linux_virtual_machine.lab1_vm: Refreshing state... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
 
-OpenTofu used the selected providers to generate the following execution plan. Resource actions are
-indicated with the following symbols:
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
   - destroy
 
 OpenTofu will perform the following actions:
 
-  # azurerm_network_interface.lab1 will be destroyed
-  - resource "azurerm_network_interface" "lab1" {
+  # azurerm_linux_virtual_machine.lab1_vm will be destroyed
+  - resource "azurerm_linux_virtual_machine" "lab1_vm" {
+      - admin_username                                         = "azureuser" -> null
+      - allow_extension_operations                             = true -> null
+      - bypass_platform_safety_checks_on_user_schedule_enabled = false -> null
+      - computer_name                                          = "lab1-vm" -> null
+      - custom_data                                            = (sensitive value) -> null
+      - disable_password_authentication                        = true -> null
+      - encryption_at_host_enabled                             = false -> null
+      - extensions_time_budget                                 = "PT1H30M" -> null
+      - id                                                     = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm" -> null
+      - location                                               = "eastus" -> null
+      - max_bid_price                                          = -1 -> null
+      - name                                                   = "lab1-vm" -> null
+      - network_interface_ids                                  = [
+          - "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic",
+        ] -> null
+      - patch_assessment_mode                                  = "ImageDefault" -> null
+      - patch_mode                                             = "ImageDefault" -> null
+      - platform_fault_domain                                  = -1 -> null
+      - priority                                               = "Regular" -> null
+      - private_ip_address                                     = "10.0.1.4" -> null
+      - private_ip_addresses                                   = [
+          - "10.0.1.4",
+        ] -> null
+      - provision_vm_agent                                     = true -> null
+      - public_ip_address                                      = "172.191.193.25" -> null
+      - public_ip_addresses                                    = [
+          - "172.191.193.25",
+        ] -> null
+      - resource_group_name                                    = "lab1-resources" -> null
+      - secure_boot_enabled                                    = false -> null
+      - size                                                   = "Standard_B1ls" -> null
+      - tags                                                   = {} -> null
+      - virtual_machine_id                                     = "ca4d1e69-bbba-41cf-9e18-e40ba1be851d" -> null
+      - vm_agent_platform_updates_enabled                      = false -> null
+      - vtpm_enabled                                           = false -> null
+
+      - admin_ssh_key {
+          - public_key = <<-EOT
+                ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONOtoMa5/y6apillwwATeBV2HivPitn1OkfZlJKHwD+R+jHToz+bfx5RnGspH/5VwdWfFJiOKPYUxhYY7pxDBLQ04dD6LbizqE1OtF1voX9uFUbTcPkrMRUr9lg7Qrl/UefWGFbaaTcaJ0eNRqKlZQJ7IToU16Bdxjfwv0eg41aAOUjICH+sMaBBIttWM27kwSdaiaT3/tWaC0FrNYNUAm08ibP7FtNJelYXe5Crt0ttXCN/rFZkqfb5NdPupyCMnPKKq0lar8zZ3RMKoNZFhCvQ2D4IJXPs7Px9PeCdWb3/3YKGjy7WaHXT+cR7jJL+S+JnkdwXJHAGJrDdpKN6uBUTA5jK/86FHlap26YJDqg7+QGmD62GhTVKVLLF1W4uYEycN4eSj/aZ21LZIcVmbHp8hnzMibKIfOnYf3HurXFK8TRPLM3nJtWpKRJ6nVj+92/BNp5G9Vwy97J/FvO5/DLj72haC/Jli6N8Sc5h83japn3A6Zu327HAdBqWZNwM= robert@saipal.eurecom.fr
+            EOT -> null
+          - username   = "azureuser" -> null
+        }
+
+      - os_disk {
+          - caching                   = "ReadWrite" -> null
+          - disk_size_gb              = 30 -> null
+          - id                        = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/lab1-vm_OsDisk_1_4f43c3792f404c10a6d03fc3656eee59" -> null
+          - name                      = "lab1-vm_OsDisk_1_4f43c3792f404c10a6d03fc3656eee59" -> null
+          - storage_account_type      = "Standard_LRS" -> null
+          - write_accelerator_enabled = false -> null
+        }
+
+      - source_image_reference {
+          - offer     = "UbuntuServer" -> null
+          - publisher = "Canonical" -> null
+          - sku       = "18.04-LTS" -> null
+          - version   = "latest" -> null
+        }
+    }
+
+  # azurerm_network_interface.lab1_nic will be destroyed
+  - resource "azurerm_network_interface" "lab1_nic" {
       - accelerated_networking_enabled = false -> null
       - applied_dns_servers            = [] -> null
       - dns_servers                    = [] -> null
-      - id                             = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic" -> null
-      - internal_domain_name_suffix    = "1nwnomxop54urnr0pso2tnjiob.bx.internal.cloudapp.net" -> null
+      - id                             = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic" -> null
       - ip_forwarding_enabled          = false -> null
       - location                       = "eastus" -> null
-      - mac_address                    = "00-0D-3A-9A-1F-FA" -> null
+      - mac_address                    = "60-45-BD-DB-61-8D" -> null
       - name                           = "lab1-nic" -> null
-      - private_ip_address             = "10.0.2.4" -> null
+      - private_ip_address             = "10.0.1.4" -> null
       - private_ip_addresses           = [
-          - "10.0.2.4",
+          - "10.0.1.4",
         ] -> null
       - resource_group_name            = "lab1-resources" -> null
       - tags                           = {} -> null
-      - virtual_machine_id             = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm" -> null
+      - virtual_machine_id             = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm" -> null
 
       - ip_configuration {
           - name                          = "internal" -> null
           - primary                       = true -> null
-          - private_ip_address            = "10.0.2.4" -> null
+          - private_ip_address            = "10.0.1.4" -> null
           - private_ip_address_allocation = "Dynamic" -> null
           - private_ip_address_version    = "IPv4" -> null
-          - subnet_id                     = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
+          - public_ip_address_id          = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip" -> null
+          - subnet_id                     = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
         }
+    }
+
+  # azurerm_network_security_group.lab1_nsg will be destroyed
+  - resource "azurerm_network_security_group" "lab1_nsg" {
+      - id                  = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg" -> null
+      - location            = "eastus" -> null
+      - name                = "lab1-nsg" -> null
+      - resource_group_name = "lab1-resources" -> null
+      - security_rule       = [
+          - {
+              - access                                     = "Allow"
+              - description                                = ""
+              - destination_address_prefix                 = "*"
+              - destination_address_prefixes               = []
+              - destination_application_security_group_ids = []
+              - destination_port_range                     = "22"
+              - destination_port_ranges                    = []
+              - direction                                  = "Inbound"
+              - name                                       = "AllowSSH"
+              - priority                                   = 1000
+              - protocol                                   = "Tcp"
+              - source_address_prefix                      = "*"
+              - source_address_prefixes                    = []
+              - source_application_security_group_ids      = []
+              - source_port_range                          = "*"
+              - source_port_ranges                         = []
+            },
+          - {
+              - access                                     = "Allow"
+              - description                                = ""
+              - destination_address_prefix                 = "*"
+              - destination_address_prefixes               = []
+              - destination_application_security_group_ids = []
+              - destination_port_range                     = "80"
+              - destination_port_ranges                    = []
+              - direction                                  = "Inbound"
+              - name                                       = "AllowHTTP"
+              - priority                                   = 1001
+              - protocol                                   = "Tcp"
+              - source_address_prefix                      = "*"
+              - source_address_prefixes                    = []
+              - source_application_security_group_ids      = []
+              - source_port_range                          = "*"
+              - source_port_ranges                         = []
+            },
+        ] -> null
+      - tags                = {} -> null
+    }
+
+  # azurerm_public_ip.lab1_public_ip will be destroyed
+  - resource "azurerm_public_ip" "lab1_public_ip" {
+      - allocation_method       = "Static" -> null
+      - ddos_protection_mode    = "VirtualNetworkInherited" -> null
+      - id                      = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip" -> null
+      - idle_timeout_in_minutes = 4 -> null
+      - ip_address              = "172.191.193.25" -> null
+      - ip_tags                 = {} -> null
+      - ip_version              = "IPv4" -> null
+      - location                = "eastus" -> null
+      - name                    = "lab1-public-ip" -> null
+      - resource_group_name     = "lab1-resources" -> null
+      - sku                     = "Standard" -> null
+      - sku_tier                = "Regional" -> null
+      - tags                    = {} -> null
+      - zones                   = [] -> null
     }
 
   # azurerm_resource_group.lab1 will be destroyed
   - resource "azurerm_resource_group" "lab1" {
-      - id       = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources" -> null
+      - id       = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources" -> null
       - location = "eastus" -> null
       - name     = "lab1-resources" -> null
       - tags     = {} -> null
     }
 
-  # azurerm_subnet.lab1 will be destroyed
-  - resource "azurerm_subnet" "lab1" {
+  # azurerm_subnet.lab1_subnet will be destroyed
+  - resource "azurerm_subnet" "lab1_subnet" {
       - address_prefixes                              = [
-          - "10.0.2.0/24",
+          - "10.0.1.0/24",
         ] -> null
       - default_outbound_access_enabled               = true -> null
-      - id                                            = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
+      - id                                            = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
       - name                                          = "lab1-subnet" -> null
       - private_endpoint_network_policies             = "Disabled" -> null
       - private_link_service_network_policies_enabled = true -> null
@@ -687,58 +817,22 @@ OpenTofu will perform the following actions:
       - virtual_network_name                          = "lab1-vnet" -> null
     }
 
-  # azurerm_virtual_machine.lab1 will be destroyed
-  - resource "azurerm_virtual_machine" "lab1" {
-      - delete_data_disks_on_termination = false -> null
-      - delete_os_disk_on_termination    = false -> null
-      - id                               = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm" -> null
-      - location                         = "eastus" -> null
-      - name                             = "lab1-vm" -> null
-      - network_interface_ids            = [
-          - "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic",
-        ] -> null
-      - resource_group_name              = "lab1-resources" -> null
-      - tags                             = {} -> null
-      - vm_size                          = "Standard_B2s" -> null
-      - zones                            = [] -> null
-
-      - os_profile {
-          # At least one attribute in this block is (or was) sensitive,
-          # so its contents will not be displayed.
-        }
-
-      - os_profile_linux_config {
-          - disable_password_authentication = false -> null
-        }
-
-      - storage_image_reference {
-          - offer     = "UbuntuServer" -> null
-          - publisher = "Canonical" -> null
-          - sku       = "18.04-LTS" -> null
-          - version   = "latest" -> null
-        }
-
-      - storage_os_disk {
-          - caching                   = "ReadWrite" -> null
-          - create_option             = "FromImage" -> null
-          - disk_size_gb              = 30 -> null
-          - managed_disk_id           = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/lab1-os-disk" -> null
-          - managed_disk_type         = "Standard_LRS" -> null
-          - name                      = "lab1-os-disk" -> null
-          - os_type                   = "Linux" -> null
-          - write_accelerator_enabled = false -> null
-        }
+  # azurerm_subnet_network_security_group_association.lab1_subnet_nsg will be destroyed
+  - resource "azurerm_subnet_network_security_group_association" "lab1_subnet_nsg" {
+      - id                        = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
+      - network_security_group_id = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg" -> null
+      - subnet_id                 = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet" -> null
     }
 
-  # azurerm_virtual_network.lab1 will be destroyed
-  - resource "azurerm_virtual_network" "lab1" {
+  # azurerm_virtual_network.lab1_vnet will be destroyed
+  - resource "azurerm_virtual_network" "lab1_vnet" {
       - address_space                  = [
           - "10.0.0.0/16",
         ] -> null
       - dns_servers                    = [] -> null
       - flow_timeout_in_minutes        = 0 -> null
-      - guid                           = "32d76cdb-7fee-48fd-b63a-7c9dc9b52871" -> null
-      - id                             = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet" -> null
+      - guid                           = "1d8336d6-8d21-4fe6-ada7-638054f1f90b" -> null
+      - id                             = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet" -> null
       - location                       = "eastus" -> null
       - name                           = "lab1-vnet" -> null
       - private_endpoint_vnet_policies = "Disabled" -> null
@@ -746,16 +840,16 @@ OpenTofu will perform the following actions:
       - subnet                         = [
           - {
               - address_prefixes                              = [
-                  - "10.0.2.0/24",
+                  - "10.0.1.0/24",
                 ]
               - default_outbound_access_enabled               = true
               - delegation                                    = []
-              - id                                            = "/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet"
+              - id                                            = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet"
               - name                                          = "lab1-subnet"
               - private_endpoint_network_policies             = "Disabled"
               - private_link_service_network_policies_enabled = true
               - route_table_id                                = ""
-              - security_group                                = ""
+              - security_group                                = "/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg"
               - service_endpoint_policy_ids                   = []
               - service_endpoints                             = []
             },
@@ -763,92 +857,7 @@ OpenTofu will perform the following actions:
       - tags                           = {} -> null
     }
 
-Plan: 0 to add, 0 to change, 5 to destroy.
-
-Do you really want to destroy all resources?
-  OpenTofu will destroy all your managed infrastructure, as shown above.
-  There is no undo. Only 'yes' will be accepted to confirm.
-
-  Enter a value: yes 
-
-azurerm_virtual_machine.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
-azurerm_virtual_machine.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 10s elapsed]
-azurerm_virtual_machine.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 20s elapsed]
-azurerm_virtual_machine.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 30s elapsed]
-azurerm_virtual_machine.lab1: Destruction complete after 35s
-azurerm_network_interface.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
-azurerm_network_interface.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...oft.Network/networkInterfaces/lab1-nic, 10s elapsed]
-azurerm_network_interface.lab1: Destruction complete after 13s
-azurerm_subnet.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
-azurerm_subnet.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...Networks/lab1-vnet/subnets/lab1-subnet, 10s elapsed]
-azurerm_subnet.lab1: Destruction complete after 11s
-azurerm_virtual_network.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
-azurerm_virtual_network.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...soft.Network/virtualNetworks/lab1-vnet, 10s elapsed]
-azurerm_virtual_network.lab1: Destruction complete after 13s
-azurerm_resource_group.lab1: Destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-3235dFFFFFF/resourceGroups/lab1-resources]
-azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...dFFFFFFF/resourceGroups/lab1-resources, 10s elapsed]   ```
-...
-azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-28e0-FFFF-9e9d-...dFFFFFFF/resourceGroups/lab1-resources, 6m50s elapsed]
-...
-azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-FFFF-4ec6-9e9d-...d3FFFFFF/resourceGroups/lab1-resources, 10m0s elapsed]
-╷
-│ Error: deleting Resource Group "lab1-resources": the Resource Group still contains Resources.
-│ 
-│ Terraform is configured to check for Resources within the Resource Group when deleting the Resource Group - and
-│ raise an error if nested Resources still exist to avoid unintentionally deleting these Resources.
-│ 
-│ Terraform has detected that the following Resources still exist within the Resource Group:
-│ 
-│ * `/subscriptions/effa7872-FFFF-4ec6-9e9d-3235d3FFFFFF/resourceGroups/LAB1-RESOURCES/providers/Microsoft.Compute/disks/lab1-os-disk`
-│ 
-│ This feature is intended to avoid the unintentional destruction of nested Resources provisioned through some
-│ other means (for example, an ARM Template Deployment) - as such you must either remove these Resources, or
-│ disable this behaviour using the feature flag `prevent_deletion_if_contains_resources` within the `features`
-│ block when configuring the Provider, for example:
-│ 
-│ provider "azurerm" {
-│   features {
-│     resource_group {
-│       prevent_deletion_if_contains_resources = false
-│     }
-│   }
-│ }
-│ 
-│ When that feature flag is set, Terraform will skip checking for any Resources within the Resource Group and
-│ delete this using the Azure API directly (which will clear up any nested resources).
-│ 
-│ More information on the `features` block can be found in the documentation:
-│ https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/features-block
-│ 
-│ 
-│ 
-╵
-```
-
-- [ ] Had to manually delete the `Resource Group` because `lab1-os-disk` was not released
-
-```
-tofu destroy
-```
-> Returns
-```powershell
-azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources]
-
-OpenTofu used the selected providers to generate the following execution plan. Resource actions are
-indicated with the following symbols:
-  - destroy
-
-OpenTofu will perform the following actions:
-
-  # azurerm_resource_group.lab1 will be destroyed
-  - resource "azurerm_resource_group" "lab1" {
-      - id       = "/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources" -> null
-      - location = "eastus" -> null
-      - name     = "lab1-resources" -> null
-      - tags     = {} -> null
-    }
-
-Plan: 0 to add, 0 to change, 1 to destroy.
+Plan: 0 to add, 0 to change, 8 to destroy.
 
 Do you really want to destroy all resources?
   OpenTofu will destroy all your managed infrastructure, as shown above.
@@ -856,10 +865,36 @@ Do you really want to destroy all resources?
 
   Enter a value: yes
 
-azurerm_resource_group.lab1: Destroying... [id=/subscriptions/effa7872-FFFF-4ec6-FFFF-3235d3FFFF/resourceGroups/lab1-resources]
-azurerm_resource_group.lab1: Destruction complete after 0s
+azurerm_subnet_network_security_group_association.lab1_subnet_nsg: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_linux_virtual_machine.lab1_vm: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+azurerm_subnet_network_security_group_association.lab1_subnet_nsg: Destruction complete after 6s
+azurerm_network_security_group.lab1_nsg: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkSecurityGroups/lab1-nsg]
+azurerm_linux_virtual_machine.lab1_vm: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 10s elapsed]
+azurerm_network_security_group.lab1_nsg: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...Network/networkSecurityGroups/lab1-nsg, 10s elapsed]
+azurerm_network_security_group.lab1_nsg: Destruction complete after 12s
+azurerm_linux_virtual_machine.lab1_vm: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 20s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 30s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 40s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 50s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Destruction complete after 51s
+azurerm_network_interface.lab1_nic: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
+azurerm_network_interface.lab1_nic: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...oft.Network/networkInterfaces/lab1-nic, 10s elapsed]
+azurerm_network_interface.lab1_nic: Destruction complete after 13s
+azurerm_subnet.lab1_subnet: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_public_ip.lab1_public_ip: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip]
+azurerm_public_ip.lab1_public_ip: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...twork/publicIPAddresses/lab1-public-ip, 10s elapsed]
+azurerm_subnet.lab1_subnet: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...Networks/lab1-vnet/subnets/lab1-subnet, 10s elapsed]
+azurerm_subnet.lab1_subnet: Destruction complete after 12s
+azurerm_virtual_network.lab1_vnet: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+azurerm_public_ip.lab1_public_ip: Destruction complete after 12s
+azurerm_virtual_network.lab1_vnet: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...soft.Network/virtualNetworks/lab1-vnet, 10s elapsed]
+azurerm_virtual_network.lab1_vnet: Destruction complete after 11s
+azurerm_resource_group.lab1: Destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources]
+azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...d3e6b4eb/resourceGroups/lab1-resources, 10s elapsed]
+azurerm_resource_group.lab1: Still destroying... [id=/subscriptions/effa7872-2FF0-4006-9e9d-...d3e6b4eb/resourceGroups/lab1-resources, 20s elapsed]
+azurerm_resource_group.lab1: Destruction complete after 22s
 
-Destroy complete! Resources: 1 destroyed.
+Destroy complete! Resources: 8 destroyed.
 ```
 
 # References
