@@ -73,7 +73,8 @@ resource "azurerm_linux_virtual_machine" "lab1_vm" {
   }
 
   # Cloud-Init Script
-  custom_data = filebase64("cloud-init-encoded.txt")
+  custom_data = filebase64("cloud-init.yaml")  # Automatically Base64-encodes the file
+
 }
 
 # Security Group
