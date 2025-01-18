@@ -72,6 +72,53 @@ resource "azurerm_linux_virtual_machine" "lab1_vm" {
   }
 }
 
+resource "azurerm_linux_virtual_machine" "lab1_vm" {
+  name                = "lab1-vm"
+  location            = azurerm_resource_group.lab1.location
+  resource_group_name = azurerm_resource_group.lab1.name
+  size                = "Standard_B1ls"  # Free tier or low-cost instance
+  admin_username      = "azureuser"
+
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file("~/.ssh/robert@eurecom.fr.pub") # Path to your SSH public key
+  }
+
+  network_interface_ids = [
+    azurerm_network_interface.lab1_nic.id,
+  ]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20_04-lts"
+    version   = "latest"
+  }
+
+  # Cloud-Init Script
+  custom_data = <<-EOF
+    #cloud-config
+    packages:
+      - nginx
+    runcmd:
+      - echo "<!DOCTYPE html>
+        <html>
+        <head><title>Clouds: Azure lab1</title></head>
+        <body>
+        <h1>Welcome to Brice's HTML Page</h1>
+        <p>No fancy page, it is just how to demonstrate how to use Open Source IaC</p>
+        </body>
+        </html>" > /var/www/html/index.html
+      - systemctl restart nginx
+  EOF
+}
+
+
 # Security Group
 resource "azurerm_network_security_group" "lab1_nsg" {
   name                = "lab1-nsg"
