@@ -1114,6 +1114,74 @@ Note: You didn't use the -out option to save this plan, so OpenTofu can't guaran
 if you run "tofu apply" now.
 ```
 
+```
+tofu apply -var="vm_size=Standard_DS2_v2" -target=azurerm_linux_virtual_machine.lab1_vm
+```
+> Returns
+```powershell
+azurerm_resource_group.lab1: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources]
+azurerm_public_ip.lab1_public_ip: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/publicIPAddresses/lab1-public-ip]
+azurerm_virtual_network.lab1_vnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet]
+azurerm_subnet.lab1_subnet: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/virtualNetworks/lab1-vnet/subnets/lab1-subnet]
+azurerm_network_interface.lab1_nic: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic]
+azurerm_linux_virtual_machine.lab1_vm: Refreshing state... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with
+the following symbols:
+  ~ update in-place
+
+OpenTofu will perform the following actions:
+
+  # azurerm_linux_virtual_machine.lab1_vm will be updated in-place
+  ~ resource "azurerm_linux_virtual_machine" "lab1_vm" {
+        id                                                     = "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm"
+        name                                                   = "lab1-vm"
+      ~ size                                                   = "Standard_B1ls" -> "Standard_DS2_v2"
+        tags                                                   = {}
+        # (25 unchanged attributes hidden)
+
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+╷
+│ Warning: Resource targeting is in effect
+│ 
+│ You are creating a plan with either the -target option or the -exclude option, which means that the result of
+│ this plan may not represent all of the changes requested by the current configuration.
+│ 
+│ The -target and -exclude options are not for routine use, and are provided only for exceptional situations such
+│ as recovering from errors or mistakes, or when OpenTofu specifically suggests to use it as part of an error
+│ message.
+╵
+
+Do you want to perform these actions?
+  OpenTofu will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_linux_virtual_machine.lab1_vm: Modifying... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+azurerm_linux_virtual_machine.lab1_vm: Still modifying... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 10s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still modifying... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 20s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still modifying... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 30s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Still modifying... [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-...rosoft.Compute/virtualMachines/lab1-vm, 40s elapsed]
+azurerm_linux_virtual_machine.lab1_vm: Modifications complete after 44s [id=/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm]
+╷
+│ Warning: Applied changes may be incomplete
+│ 
+│ The plan was created with the -target or the -exclude option in effect, so some changes requested in the
+│ configuration may have been ignored and the output values may not be fully updated. Run the following command to
+│ verify that no other changes are pending:
+│     tofu plan
+│ 	
+│ Note that the -target and -exclude options are not suitable for routine use, and are provided only for
+│ exceptional situations such as recovering from errors or mistakes, or when OpenTofu specifically suggests to use
+│ it as part of an error message.
+╵
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+```
 
 # References
 
