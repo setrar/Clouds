@@ -1362,6 +1362,155 @@ Note: You didn't use the -out option to save this plan, so OpenTofu can't guaran
 if you run "tofu apply" now.
 ```
 
+## Resizing VM
+
+```
+az vm stop --name lab1-vm --resource-group lab1-resources
+```
+> Returns
+```powershell
+About to power off the specified VM...
+It will continue to be billed. To deallocate a VM, run: az vm deallocate.
+```
+
+
+```
+az vm resize --name lab1-vm --resource-group lab1-resources --size Standard_DS2_v2
+```
+> Returns
+```json
+{
+  "additionalCapabilities": null,
+  "applicationProfile": null,
+  "availabilitySet": null,
+  "billingProfile": null,
+  "capacityReservation": null,
+  "diagnosticsProfile": {
+    "bootDiagnostics": {
+      "enabled": false,
+      "storageUri": null
+    }
+  },
+  "etag": "\"4\"",
+  "evictionPolicy": null,
+  "extendedLocation": null,
+  "extensionsTimeBudget": "PT1H30M",
+  "hardwareProfile": {
+    "vmSize": "Standard_DS2_v2",
+    "vmSizeProperties": null
+  },
+  "host": null,
+  "hostGroup": null,
+  "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm",
+  "identity": null,
+  "instanceView": null,
+  "licenseType": null,
+  "location": "eastus",
+  "managedBy": null,
+  "name": "lab1-vm",
+  "networkProfile": {
+    "networkApiVersion": null,
+    "networkInterfaceConfigurations": null,
+    "networkInterfaces": [
+      {
+        "deleteOption": null,
+        "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic",
+        "primary": true,
+        "resourceGroup": "lab1-resources"
+      }
+    ]
+  },
+  "osProfile": {
+    "adminPassword": null,
+    "adminUsername": "azureuser",
+    "allowExtensionOperations": true,
+    "computerName": "lab1-vm",
+    "customData": null,
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": true,
+      "enableVmAgentPlatformUpdates": false,
+      "patchSettings": {
+        "assessmentMode": "ImageDefault",
+        "automaticByPlatformSettings": null,
+        "patchMode": "ImageDefault"
+      },
+      "provisionVmAgent": true,
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONOtoMa5/y6apillwwATeBV2HivPitn1OkfZlJKHwD+R+jHToz+bfx5RnGspH/5VwdWfFJiOKPYUxhYY7pxDBLQ04dD6LbizqE1OtF1voX9uFUbTcPkrMRUr9lg7Qrl/UefWGFbaaTcaJ0eNRqKlZQJ7IToU16Bdxjfwv0eg41aAOUjICH+sMaBBIttWM27kwSdaiaT3/tWaC0FrNYNUAm08ibP7FtNJelYXe5Crt0ttXCN/rFZkqfb5NdPupyCMnPKKq0lar8zZ3RMKoNZFhCvQ2D4IJXPs7Px9PeCdWb3/3YKGjy7WaHXT+cR7jJL+S+JnkdwXJHAGJrDdpKN6uBUTA5jK/86FHlap26YJDqg7+QGmD62GhTVKVLLF1W4uYEycN4eSj/aZ21LZIcVmbHp8hnzMibKIfOnYf3HurXFK8TRPLM3nJtWpKRJ6nVj+92/BNp5G9Vwy97J/FvO5/DLj72haC/Jli6N8Sc5h83japn3A6Zu327HAdBqWZNwM= robert@saipal.eurecom.fr\n",
+            "path": "/home/azureuser/.ssh/authorized_keys"
+          }
+        ]
+      }
+    },
+    "requireGuestProvisionSignal": true,
+    "secrets": [],
+    "windowsConfiguration": null
+  },
+  "plan": null,
+  "platformFaultDomain": null,
+  "priority": "Regular",
+  "provisioningState": "Succeeded",
+  "proximityPlacementGroup": null,
+  "resourceGroup": "lab1-resources",
+  "resources": null,
+  "scheduledEventsPolicy": null,
+  "scheduledEventsProfile": null,
+  "securityProfile": null,
+  "storageProfile": {
+    "dataDisks": [],
+    "diskControllerType": null,
+    "imageReference": {
+      "communityGalleryImageId": null,
+      "exactVersion": "18.04.202401161",
+      "id": null,
+      "offer": "UbuntuServer",
+      "publisher": "Canonical",
+      "sharedGalleryImageId": null,
+      "sku": "18.04-LTS",
+      "version": "latest"
+    },
+    "osDisk": {
+      "caching": "ReadWrite",
+      "createOption": "FromImage",
+      "deleteOption": "Detach",
+      "diffDiskSettings": null,
+      "diskSizeGb": 30,
+      "encryptionSettings": null,
+      "image": null,
+      "managedDisk": {
+        "diskEncryptionSet": null,
+        "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/lab1-vm_OsDisk_1_41a85ea6e7e3466bbfdeac4f7673aee8",
+        "resourceGroup": "lab1-resources",
+        "securityProfile": null,
+        "storageAccountType": "Standard_LRS"
+      },
+      "name": "lab1-vm_OsDisk_1_41a85ea6e7e3466bbfdeac4f7673aee8",
+      "osType": "Linux",
+      "vhd": null,
+      "writeAcceleratorEnabled": false
+    }
+  },
+  "tags": {},
+  "timeCreated": "2025-01-18T22:10:06.333527+00:00",
+  "type": "Microsoft.Compute/virtualMachines",
+  "userData": null,
+  "virtualMachineScaleSet": null,
+  "vmId": "5023f4e7-0aaf-421a-84ff-f6b3eb42a709",
+  "zones": null
+}
+```
+
+```
+az vm start --name lab1-vm --resource-group lab1-resources
+```
+/Running...
+
+```
+az vm show --name lab1-vm --resource-group lab1-resources --query "hardwareProfile.vmSize"
+```
+> Standard_DS2_v2"
 
 # References
 
