@@ -933,3 +933,32 @@ runcmd:
 
 ---
 
+## Access the VM using `ssh`
+
+- [ ] Add the `ssh` private key to the `ssh-agent` list
+
+```
+ssh-add ~/.ssh/robert@eurecom.fr
+```
+
+- [ ] Access the VM
+
+* List the available VM 
+
+```
+az vm list-ip-addresses --resource-group lab1-resources --output table
+```
+> Returns
+```powershell
+
+VirtualMachine    PublicIPAddresses    PrivateIPAddresses
+----------------  -------------------  --------------------
+lab1-vm           172.191.193.25       10.0.1.4
+```
+
+* Use the public IP address
+
+```
+ssh azureuser@172.191.193.25
+```
+
