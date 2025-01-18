@@ -811,3 +811,168 @@ azurerm_resource_group.lab1: Destruction complete after 0s
 
 Destroy complete! Resources: 1 destroyed.
 ```
+
+# References
+
+## Cloud-Init
+
+**Cloud-init** is a powerful tool used to initialize cloud instances during boot, such as configuring users, installing packages, and running scripts. Here's a comprehensive guide to help you understand and effectively use cloud-init.
+
+---
+
+### **Basic Structure of Cloud-Init**
+Cloud-init configuration files typically use YAML syntax and consist of the following sections:
+
+1. **`packages`**: List of packages to install.
+2. **`runcmd`**: Commands to run at boot time.
+3. **`write_files`**: Write files to the instance.
+4. **`users`**: Configure users and SSH keys.
+5. **`bootcmd`**: Commands that run very early in the boot process.
+
+#### Example:
+```yaml
+#cloud-config
+packages:
+  - nginx
+
+runcmd:
+  - echo "Welcome to my server" > /var/www/html/index.html
+  - systemctl restart nginx
+```
+
+---
+
+### **Step-by-Step Guide**
+
+#### **1. Write a Cloud-Init Script**
+Create a `cloud-init.yaml` file. For example:
+
+```yaml
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+
+write_files:
+  - path: /var/www/html/index.html
+    content: |
+      <!DOCTYPE html>
+      <html>
+      <head><title>Cloud-init</title></head>
+      <body>
+      <h1>Welcome to Cloud-init Server</h1>
+      <p>This is configured automatically during VM initialization.</p>
+      </body>
+      </html>
+
+runcmd:
+  - systemctl restart nginx
+```
+
+---
+
+#### **2. Base64 Encode the Script (for Terraform or Azure CLI)**
+If required (e.g., in Terraform's `custom_data`), encode the file:
+```bash
+base64 cloud-init.yaml > cloud-init-encoded.txt
+```
+
+---
+
+#### **3. Test Locally with a Cloud-Init Capable VM**
+Spin up a local VM (e.g., using Multipass or a similar tool) to test your script:
+```bash
+multipass launch --cloud-init cloud-init.yaml
+```
+
+---
+
+#### **4. Apply the Script in Terraform**
+If you're using Terraform with Azure, include the encoded script in the `custom_data` field:
+
+```hcl
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = "example-vm"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  size                = "Standard_B1s"
+
+  admin_username = "azureuser"
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  custom_data = filebase64("cloud-init-encoded.txt")
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20_04-lts"
+    version   = "latest"
+  }
+}
+```
+
+---
+
+#### **5. Debugging Cloud-Init**
+If something goes wrong, review the logs on the VM:
+1. Check the cloud-init output:
+   ```bash
+   sudo less /var/log/cloud-init-output.log
+   ```
+2. Check detailed cloud-init logs:
+   ```bash
+   sudo less /var/log/cloud-init.log
+   ```
+
+Look for errors or skipped sections and adjust your YAML file accordingly.
+
+---
+
+### **Common Scenarios**
+
+#### **Install and Configure NGINX**
+```yaml
+#cloud-config
+packages:
+  - nginx
+
+runcmd:
+  - echo "Hello from cloud-init!" > /var/www/html/index.html
+  - systemctl enable nginx
+  - systemctl start nginx
+```
+
+#### **Add a User**
+```yaml
+#cloud-config
+users:
+  - default
+  - name: newuser
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3...your-public-key... user@host
+```
+
+#### **Run Custom Scripts**
+```yaml
+#cloud-config
+runcmd:
+  - curl -fsSL https://example.com/install-script.sh | bash
+```
+
+---
+
+### **Best Practices**
+1. **Test Locally First**: Use a local VM to validate your cloud-init script.
+2. **Keep Scripts Idempotent**: Cloud-init runs only on the first boot. Ensure scripts are safe to reapply if needed.
+3. **Use `write_files` for Complex Configurations**: Store large configurations directly in files rather than inline commands.
+4. **Enable Logging**: Monitor cloud-init logs during troubleshooting.
+
+---
+
+Let me know if you need help with a specific cloud-init scenario! 🚀
