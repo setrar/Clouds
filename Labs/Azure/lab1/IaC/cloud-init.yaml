@@ -1,0 +1,13 @@
+#cloud-config
+packages:
+  - nginx
+runcmd:
+  - echo "<!DOCTYPE html>
+    <html>
+    <head><title>Clouds: Azure lab1</title></head>
+    <body>
+    <h1>Welcome to Brice's HTML Page</h1>
+    <p>No fancy page, it is just how to demonstrate how to use Open Source IaC</p>
+    </body>
+    </html>" > /var/www/html/index.html
+  - systemctl restart nginx
