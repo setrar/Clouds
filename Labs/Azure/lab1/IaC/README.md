@@ -1074,6 +1074,11 @@ Destroy complete! Resources: 8 destroyed.
 ## Resize the VM
 
 ```
+az vm deallocate --name lab1-vm --resource-group lab1-resources
+```
+
+
+```
 tofu plan
 ```
 > Returns
@@ -1182,6 +1187,11 @@ azurerm_linux_virtual_machine.lab1_vm: Modifications complete after 44s [id=/sub
 
 Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
+
+```
+az vm start --name lab1-vm --resource-group lab1-resources
+```
+
 
 # References
 
