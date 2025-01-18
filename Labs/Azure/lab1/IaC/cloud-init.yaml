@@ -9,17 +9,81 @@ write_files:
     path: /etc/nginx/sites-available/default
     defer: true
     content: |
-      server {
-        listen 80;
-        location / {
-          proxy_pass http://localhost:3000;
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection keep-alive;
-          proxy_set_header Host $host;
-          proxy_cache_bypass $http_upgrade;
-        }
-      }
+      var express = require('express');
+      var app = express();
+      var os = require('os');
+    
+      // Middleware for logging requests
+      app.use((req, res, next) => {
+        console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+        next();
+      });
+    
+      // Serve the main page
+      app.get('/', function (req, res) {
+        const hostname = os.hostname();
+        const html = `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Cloud-Init Enhanced Page</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                color: #333;
+                text-align: center;
+              }
+              header {
+                background: #0078D4;
+                color: white;
+                padding: 1rem 0;
+              }
+              h1 {
+                font-size: 2.5rem;
+              }
+              p {
+                font-size: 1.2rem;
+                margin-top: 1rem;
+              }
+              footer {
+                margin-top: 2rem;
+                font-size: 0.9rem;
+                color: #666;
+              }
+            </style>
+          </head>
+          <body>
+            <header>
+              <h1>Welcome to the Cloud-Init Web Server</h1>
+            </header>
+            <main>
+              <p>This page is served from host: <strong>${hostname}</strong></p>
+              <p>Congratulations! Your cloud-init script deployed this application.</p>
+            </main>
+            <footer>
+              <p>&copy; 2025 Cloud-Init Demo</p>
+            </footer>
+          </body>
+          </html>
+        `;
+        res.send(html);
+      });
+    
+      // Handle 404 errors
+      app.use((req, res) => {
+        res.status(404).send('404: Page Not Found');
+      });
+    
+      // Start the server
+      const PORT = 3000;
+      app.listen(PORT, function () {
+        console.log(`Server is running on http://${os.hostname()}:${PORT}`);
+      });
   - owner: azureuser:azureuser
     path: /home/azureuser/myapp/index.js
     defer: true
