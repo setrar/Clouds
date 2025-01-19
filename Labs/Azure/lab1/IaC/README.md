@@ -1577,7 +1577,7 @@ lab1-vm           172.191.25.162       10.0.1.4
 ssh azureuser@172.191.25.162
 ```
 
-## Docker Static WebSite
+## Docker
 
 Here’s a step-by-step guide to creating a Dockerized static site, running it in a VM, and verifying it with `curl`. The steps use the reference from AzureMOL Chapter 19.2 for a simple Nginx Docker container.
 
