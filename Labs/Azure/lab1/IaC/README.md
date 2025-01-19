@@ -1712,6 +1712,14 @@ az acr credential show --name acrclouds2025eurbr
    ```bash
    docker login acrclouds2025eurbr.azurecr.io
    ```
+   > Returns
+   ```powershell
+   WARNING! Your password will be stored unencrypted in /home/azureuser/.docker/config.json.
+   Configure a credential helper to remove this warning. See
+   https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+   
+   Login Succeeded
+   ```
 
    Enter the username and password retrieved earlier.
 
