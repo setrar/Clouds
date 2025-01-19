@@ -1362,6 +1362,155 @@ Note: You didn't use the -out option to save this plan, so OpenTofu can't guaran
 if you run "tofu apply" now.
 ```
 
+## Resizing VM
+
+```
+az vm stop --name lab1-vm --resource-group lab1-resources
+```
+> Returns
+```powershell
+About to power off the specified VM...
+It will continue to be billed. To deallocate a VM, run: az vm deallocate.
+```
+
+
+```
+az vm resize --name lab1-vm --resource-group lab1-resources --size Standard_DS2_v2
+```
+> Returns
+```json
+{
+  "additionalCapabilities": null,
+  "applicationProfile": null,
+  "availabilitySet": null,
+  "billingProfile": null,
+  "capacityReservation": null,
+  "diagnosticsProfile": {
+    "bootDiagnostics": {
+      "enabled": false,
+      "storageUri": null
+    }
+  },
+  "etag": "\"4\"",
+  "evictionPolicy": null,
+  "extendedLocation": null,
+  "extensionsTimeBudget": "PT1H30M",
+  "hardwareProfile": {
+    "vmSize": "Standard_DS2_v2",
+    "vmSizeProperties": null
+  },
+  "host": null,
+  "hostGroup": null,
+  "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/virtualMachines/lab1-vm",
+  "identity": null,
+  "instanceView": null,
+  "licenseType": null,
+  "location": "eastus",
+  "managedBy": null,
+  "name": "lab1-vm",
+  "networkProfile": {
+    "networkApiVersion": null,
+    "networkInterfaceConfigurations": null,
+    "networkInterfaces": [
+      {
+        "deleteOption": null,
+        "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Network/networkInterfaces/lab1-nic",
+        "primary": true,
+        "resourceGroup": "lab1-resources"
+      }
+    ]
+  },
+  "osProfile": {
+    "adminPassword": null,
+    "adminUsername": "azureuser",
+    "allowExtensionOperations": true,
+    "computerName": "lab1-vm",
+    "customData": null,
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": true,
+      "enableVmAgentPlatformUpdates": false,
+      "patchSettings": {
+        "assessmentMode": "ImageDefault",
+        "automaticByPlatformSettings": null,
+        "patchMode": "ImageDefault"
+      },
+      "provisionVmAgent": true,
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDONOtoMa5/y6apillwwATeBV2HivPitn1OkfZlJKHwD+R+jHToz+bfx5RnGspH/5VwdWfFJiOKPYUxhYY7pxDBLQ04dD6LbizqE1OtF1voX9uFUbTcPkrMRUr9lg7Qrl/UefWGFbaaTcaJ0eNRqKlZQJ7IToU16Bdxjfwv0eg41aAOUjICH+sMaBBIttWM27kwSdaiaT3/tWaC0FrNYNUAm08ibP7FtNJelYXe5Crt0ttXCN/rFZkqfb5NdPupyCMnPKKq0lar8zZ3RMKoNZFhCvQ2D4IJXPs7Px9PeCdWb3/3YKGjy7WaHXT+cR7jJL+S+JnkdwXJHAGJrDdpKN6uBUTA5jK/86FHlap26YJDqg7+QGmD62GhTVKVLLF1W4uYEycN4eSj/aZ21LZIcVmbHp8hnzMibKIfOnYf3HurXFK8TRPLM3nJtWpKRJ6nVj+92/BNp5G9Vwy97J/FvO5/DLj72haC/Jli6N8Sc5h83japn3A6Zu327HAdBqWZNwM= robert@saipal.eurecom.fr\n",
+            "path": "/home/azureuser/.ssh/authorized_keys"
+          }
+        ]
+      }
+    },
+    "requireGuestProvisionSignal": true,
+    "secrets": [],
+    "windowsConfiguration": null
+  },
+  "plan": null,
+  "platformFaultDomain": null,
+  "priority": "Regular",
+  "provisioningState": "Succeeded",
+  "proximityPlacementGroup": null,
+  "resourceGroup": "lab1-resources",
+  "resources": null,
+  "scheduledEventsPolicy": null,
+  "scheduledEventsProfile": null,
+  "securityProfile": null,
+  "storageProfile": {
+    "dataDisks": [],
+    "diskControllerType": null,
+    "imageReference": {
+      "communityGalleryImageId": null,
+      "exactVersion": "18.04.202401161",
+      "id": null,
+      "offer": "UbuntuServer",
+      "publisher": "Canonical",
+      "sharedGalleryImageId": null,
+      "sku": "18.04-LTS",
+      "version": "latest"
+    },
+    "osDisk": {
+      "caching": "ReadWrite",
+      "createOption": "FromImage",
+      "deleteOption": "Detach",
+      "diffDiskSettings": null,
+      "diskSizeGb": 30,
+      "encryptionSettings": null,
+      "image": null,
+      "managedDisk": {
+        "diskEncryptionSet": null,
+        "id": "/subscriptions/effa7872-2FF0-4FF6-9e9d-3FFFFFFFFFb/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/lab1-vm_OsDisk_1_41a85ea6e7e3466bbfdeac4f7673aee8",
+        "resourceGroup": "lab1-resources",
+        "securityProfile": null,
+        "storageAccountType": "Standard_LRS"
+      },
+      "name": "lab1-vm_OsDisk_1_41a85ea6e7e3466bbfdeac4f7673aee8",
+      "osType": "Linux",
+      "vhd": null,
+      "writeAcceleratorEnabled": false
+    }
+  },
+  "tags": {},
+  "timeCreated": "2025-01-18T22:10:06.333527+00:00",
+  "type": "Microsoft.Compute/virtualMachines",
+  "userData": null,
+  "virtualMachineScaleSet": null,
+  "vmId": "5023f4e7-0aaf-421a-84ff-f6b3eb42a709",
+  "zones": null
+}
+```
+
+```
+az vm start --name lab1-vm --resource-group lab1-resources
+```
+/Running...
+
+```
+az vm show --name lab1-vm --resource-group lab1-resources --query "hardwareProfile.vmSize"
+```
+> Standard_DS2_v2"
 
 # References
 
@@ -1427,4 +1576,191 @@ lab1-vm           172.191.25.162       10.0.1.4
 ```
 ssh azureuser@172.191.25.162
 ```
+
+## Docker Static WebSite
+
+Here’s a step-by-step guide to creating a Dockerized static site, running it in a VM, and verifying it with `curl`. The steps use the reference from AzureMOL Chapter 19.2 for a simple Nginx Docker container.
+
+### Step 0: Copy the Static HTML File
+
+```
+cat docker-index.html| pbcopy
+```
+
+---
+
+### Step 1: Create a Static HTML File
+Inside your VM, create a directory for the project and add an HTML file:
+
+```bash
+mkdir docker-static-site
+cd docker-static-site
+vi index.html
+<paste all the content copied above>
+```
+
+---
+
+### Step 2: Create a Dockerfile
+Create a `Dockerfile` in the same directory to set up an Nginx container:
+
+```bash
+cat <<EOF > Dockerfile
+# Use the official Nginx image as the base
+FROM nginx:latest
+
+# Copy the static HTML file to the default Nginx directory
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80
+EXPOSE 80
+EOF
+```
+
+---
+
+### Step 3: Build the Docker Image
+Build the Docker image locally:
+
+```bash
+docker build -t static-site .
+```
+
+---
+
+### Step 4: Run the Docker Container
+Run the container and map port 80 on the host to port 80 on the container:
+
+```bash
+docker run -d -p 8080:80 --name static-site-container static-site
+```
+
+---
+
+### Step 5: Verify the Deployment with `curl`
+Use `curl` to ensure the site is served correctly:
+
+```bash
+curl http://localhost:8080
+```
+
+You should see the HTML content:
+```html
+<!DOCTYPE html>
+<html>
+<head><title>Static Site</title></head>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <header>
+    <h1>Welcome to the Lab1 &#x1F324; Container Registry</h1>
+  </header>
+  <main>
+    <p>The purpose of this <b>lab1</b> is to demonstrate how to use IaC (Infrastructure as Code)</p>
+    <p>The entire IaC Code for this lab can be accessed here  &#x1F449;<a href="https://github.com/setrar/Clouds/tree/main/Labs/Azure/lab1/IaC" target="_blank">IaC Lab1</a> </p>
+  </main>
+  <footer>
+    <p>&copy; 2025 Student: ......</p>
+  </footer>
+</body>
+</html>
+</html>
+```
+
+---
+
+### Step 6: Get the ACR Login Server from Azure Shell
+After the registry is created, you can retrieve the login server using Azure CLI:
+
+
+```
+az acr list --resource-group lab1-resources --query "[].{loginServer:loginServer}" -o table
+```
+> Returns
+```powershell 
+LoginServer
+-----------------------------
+acrclouds2025eurbr.azurecr.io
+```
+
+### Step 7: Docker Login to ACR from the VM
+
+```
+az acr credential show --name acrclouds2025eurbr
+```
+> Returns
+```json
+{
+  "passwords": [
+    {
+      "name": "password",
+      "value": "IAHZCrJhXjFGXwobviouskaXDCwulFuJ5T/YdIs5gZMICRCsA5SH"
+    },
+    {
+      "name": "password2",
+      "value": "91HXoXDCwulFuJ5T/YdIs5gZMI1dQvjbJobviousvXYTxQuIyt"
+    }
+  ],
+  "username": "acrclouds2025eurbr"
+}
+```
+
+### Step 8: Docker Login to ACR from the VM
+
+1. **Login to ACR**  
+   From the VM:
+   ```bash
+   docker login acrclouds2025eurbr.azurecr.io
+   ```
+   > Returns
+   ```powershell
+   WARNING! Your password will be stored unencrypted in /home/azureuser/.docker/config.json.
+   Configure a credential helper to remove this warning. See
+   https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+   
+   Login Succeeded
+   ```
+
+   Enter the username and password retrieved earlier.
+
+---
+
+### Step 9: Push the Docker Image to ACR
+
+1. **Tag Your Docker Image**  
+   Tag the local image with the ACR login server:
+   ```bash
+   docker tag static-site acrclouds2025eurbr.azurecr.io/static-site:v1
+   ```
+
+2. **Push the Docker Image**  
+   Push the image to the ACR:
+   ```bash
+   docker push acrclouds2025eurbr.azurecr.io/static-site:v1
+   ```
+
+3. **Verify the Image in ACR**  
+   Check that the image is successfully pushed:
+   ```bash
+   az acr repository list --name acrclouds2025eurbr --output table
+   ```
+
+### Create ACR
+
+```
+az container create \
+  --resource-group lab1-resources \
+  --name static-site-container \
+  --image acrclouds2025eurbr.azurecr.io/static-site:v1 \
+  --cpu 1 \
+  --memory 1 \
+  --ports 80 \
+  --dns-name-label acrclouds2025eurbr \     
+  --query ipAddress.fqdn \
+  --os-type Linux \
+  --registry-login-server acrclouds2025eurbr.azurecr.io \
+  --registry-username acrclouds2025eurbr \
+  --registry-password <acr-password>
+```
+> / Running ..
 
