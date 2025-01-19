@@ -1745,3 +1745,22 @@ az acr credential show --name acrclouds2025eurbr
    az acr repository list --name acrclouds2025eurbr --output table
    ```
 
+### Create ACR
+
+```
+az container create \
+  --resource-group lab1-resources \
+  --name static-site-container \
+  --image acrclouds2025eurbr.azurecr.io/static-site:v1 \
+  --cpu 1 \
+  --memory 1 \
+  --ports 80 \
+  --dns-name-label acrclouds2025eurbr \     
+  --query ipAddress.fqdn \
+  --os-type Linux \
+  --registry-login-server acrclouds2025eurbr.azurecr.io \
+  --registry-username acrclouds2025eurbr \
+  --registry-password <acr-password>
+```
+> / Running ..
+
