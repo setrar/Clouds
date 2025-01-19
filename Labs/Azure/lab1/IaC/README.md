@@ -2018,12 +2018,112 @@ sudo fio --name=seq_readwrite_test --rw=rw --bs=64k --direct=1 \
          --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
          --time_based --filename=/dev/sdb --group_reporting
 ```
+> Returns
+```powershell
+seq_readwrite_test: (g=0): rw=rw, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=libaio, iodepth=32
+fio-3.1
+Starting 1 process
+[I 2025-01-19 09:17:28.716 ServerApp] Adapting from protocol version 5.0 (kernel e65fb00f-ddfe-488d-b878-3d214e20505f) to 5.3 (client).
+                    [I 2025-01-19 09:17:28.717 ServerApp] Connecting to kernel e65fb00f-ddfe-488d-b878-3d214e20505f.
+Jobs: 1 (f=1): [M(1)][100.0%][r=191MiB/s,w=193MiB/s][r=3061,w=3081 IOPS][eta 00m:00s]
+seq_readwrite_test: (groupid=0, jobs=1): err= 0: pid=3172: Sun Jan 19 08:17:35 2025
+   read: IOPS=3128, BW=196MiB/s (205MB/s)(11.5GiB/60001msec)
+    slat (usec): min=3, max=128, avg= 6.46, stdev= 2.33
+    clat (usec): min=22, max=61608, avg=4887.76, stdev=13635.36
+     lat (usec): min=28, max=61616, avg=4894.35, stdev=13635.32
+    clat percentiles (usec):
+     |  1.00th=[   62],  5.00th=[   95], 10.00th=[  130], 20.00th=[  194],
+     | 30.00th=[  247], 40.00th=[  297], 50.00th=[  347], 60.00th=[  396],
+     | 70.00th=[  445], 80.00th=[  519], 90.00th=[34866], 95.00th=[42730],
+     | 99.00th=[57934], 99.50th=[58459], 99.90th=[58983], 99.95th=[58983],
+     | 99.99th=[60556]
+   bw (  KiB/s): min=147584, max=312192, per=100.00%, avg=200320.00, stdev=17627.25, samples=119
+   iops        : min= 2306, max= 4878, avg=3129.99, stdev=275.41, samples=119
+  write: IOPS=3124, BW=195MiB/s (205MB/s)(11.4GiB/60001msec)
+    slat (usec): min=4, max=379, avg= 8.95, stdev= 3.23
+    clat (usec): min=101, max=65998, avg=5329.75, stdev=13605.94
+     lat (usec): min=109, max=66005, avg=5338.84, stdev=13605.72
+    clat percentiles (usec):
+     |  1.00th=[  167],  5.00th=[  251], 10.00th=[  351], 20.00th=[  502],
+     | 30.00th=[  603], 40.00th=[  701], 50.00th=[  783], 60.00th=[  873],
+     | 70.00th=[  971], 80.00th=[ 1172], 90.00th=[34866], 95.00th=[42730],
+     | 99.00th=[57934], 99.50th=[58459], 99.90th=[59507], 99.95th=[60031],
+     | 99.99th=[61604]
+   bw (  KiB/s): min=142080, max=325376, per=100.00%, avg=200080.45, stdev=18854.69, samples=119
+   iops        : min= 2220, max= 5084, avg=3126.22, stdev=294.60, samples=119
+  lat (usec)   : 50=0.16%, 100=2.71%, 250=14.86%, 500=31.25%, 750=18.38%
+  lat (usec)   : 1000=13.61%
+  lat (msec)   : 2=7.94%, 4=0.82%, 10=0.04%, 50=8.36%, 100=1.88%
+  cpu          : usr=2.33%, sys=5.73%, ctx=126550, majf=0, minf=13
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=100.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwt: total=187740,187487,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+   READ: bw=196MiB/s (205MB/s), 196MiB/s-196MiB/s (205MB/s-205MB/s), io=11.5GiB (12.3GB), run=60001-60001msec
+  WRITE: bw=195MiB/s (205MB/s), 195MiB/s-195MiB/s (205MB/s-205MB/s), io=11.4GiB (12.3GB), run=60001-60001msec
+
+Disk stats (read/write):
+  sdb: ios=187370/187115, merge=0/0, ticks=909920/994469, in_queue=1636252, util=99.85%
+```
 
 For `/dev/sdc`:
 ```bash
 sudo fio --name=seq_readwrite_test --rw=rw --bs=64k --direct=1 \
          --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
          --time_based --filename=/dev/sdc --group_reporting
+```
+> Returns
+```powershell
+seq_readwrite_test: (g=0): rw=rw, bs=(R) 64.0KiB-64.0KiB, (W) 64.0KiB-64.0KiB, (T) 64.0KiB-64.0KiB, ioengine=libaio, iodepth=32
+fio-3.1
+Starting 1 process
+[I 2025-01-19 09:19:28.604 ServerApp] Saving file at /lab1/REPORT.ipynb[eta 00m:43s]
+                                                                       Jobs: 1 (f=1): [M(1)][30.0%][r=19.2MiB/s,w=1Jobs: 1 (f=1): [M(1)][100.0%][r=19.7MiB/s,w=18.6MiB/s][r=315,w=297 IOPS][eta 00m:00s]
+seq_readwrite_test: (groupid=0, jobs=1): err= 0: pid=3218: Sun Jan 19 08:20:11 2025
+   read: IOPS=421, BW=26.3MiB/s (27.6MB/s)(1582MiB/60067msec)
+    slat (nsec): min=3500, max=71400, avg=7957.65, stdev=4643.59
+    clat (usec): min=34, max=145007, avg=32259.94, stdev=23712.53
+     lat (usec): min=40, max=145013, avg=32268.05, stdev=23712.84
+    clat percentiles (usec):
+     |  1.00th=[    60],  5.00th=[    95], 10.00th=[   149], 20.00th=[   314],
+     | 30.00th=[   553], 40.00th=[ 38536], 50.00th=[ 42730], 60.00th=[ 45351],
+     | 70.00th=[ 46924], 80.00th=[ 47973], 90.00th=[ 55837], 95.00th=[ 62129],
+     | 99.00th=[ 90702], 99.50th=[ 99091], 99.90th=[106431], 99.95th=[107480],
+     | 99.99th=[109577]
+   bw (  KiB/s): min=16512, max=41600, per=100.00%, avg=26970.92, stdev=8666.17, samples=120
+   iops        : min=  258, max=  650, avg=421.39, stdev=135.39, samples=120
+  write: IOPS=420, BW=26.3MiB/s (27.6MB/s)(1579MiB/60067msec)
+    slat (nsec): min=4500, max=63200, avg=11880.46, stdev=5351.94
+    clat (msec): min=3, max=123, avg=43.75, stdev=20.07
+     lat (msec): min=3, max=123, avg=43.76, stdev=20.07
+    clat percentiles (msec):
+     |  1.00th=[    7],  5.00th=[    8], 10.00th=[   10], 20.00th=[   24],
+     | 30.00th=[   45], 40.00th=[   47], 50.00th=[   48], 60.00th=[   50],
+     | 70.00th=[   51], 80.00th=[   54], 90.00th=[   64], 95.00th=[   66],
+     | 99.00th=[  102], 99.50th=[  108], 99.90th=[  111], 99.95th=[  113],
+     | 99.99th=[  118]
+   bw (  KiB/s): min=17500, max=41856, per=100.00%, avg=26930.43, stdev=8684.50, samples=120
+   iops        : min=  273, max=  654, avg=420.76, stdev=135.68, samples=120
+  lat (usec)   : 50=0.09%, 100=2.72%, 250=5.60%, 500=5.75%, 750=1.73%
+  lat (usec)   : 1000=0.18%
+  lat (msec)   : 2=0.02%, 4=0.22%, 10=7.28%, 20=2.67%, 50=50.66%
+  lat (msec)   : 100=22.25%, 250=0.82%
+  cpu          : usr=0.63%, sys=1.18%, ctx=26548, majf=0, minf=10
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=99.9%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwt: total=25308,25262,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+   READ: bw=26.3MiB/s (27.6MB/s), 26.3MiB/s-26.3MiB/s (27.6MB/s-27.6MB/s), io=1582MiB (1659MB), run=60067-60067msec
+  WRITE: bw=26.3MiB/s (27.6MB/s), 26.3MiB/s-26.3MiB/s (27.6MB/s-27.6MB/s), io=1579MiB (1656MB), run=60067-60067msec
+
+Disk stats (read/write):
+  sdc: ios=25297/25220, merge=0/0, ticks=811088/1101940, in_queue=1822952, util=99.90%
 ```
 
 #### **Random Read IOPS (4KB)**
@@ -2042,6 +2142,40 @@ sudo fio --name=random_read_iops --rw=randread --bs=4k --direct=1 \
          --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
          --time_based --filename=/dev/sdb --group_reporting
 ```
+> Returns
+```powershell
+random_read_iops: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+fio-3.1
+Starting 1 process
+Jobs: 1 (f=1): [r(1)][100.0%][r=63.8MiB/s,w=0KiB/s][r=16.3k,w=0 IOPS][eta 00m:00s]
+random_read_iops: (groupid=0, jobs=1): err= 0: pid=3244: Sun Jan 19 08:26:12 2025
+   read: IOPS=16.3k, BW=63.7MiB/s (66.8MB/s)(3825MiB/60036msec)
+    slat (usec): min=2, max=120, avg= 3.57, stdev= 1.30
+    clat (usec): min=94, max=59061, avg=1957.59, stdev=8311.93
+     lat (usec): min=97, max=59065, avg=1961.28, stdev=8311.88
+    clat percentiles (usec):
+     |  1.00th=[  133],  5.00th=[  155], 10.00th=[  174], 20.00th=[  204],
+     | 30.00th=[  235], 40.00th=[  265], 50.00th=[  289], 60.00th=[  318],
+     | 70.00th=[  347], 80.00th=[  392], 90.00th=[  465], 95.00th=[  570],
+     | 99.00th=[41681], 99.50th=[54264], 99.90th=[56886], 99.95th=[56886],
+     | 99.99th=[57410]
+   bw (  KiB/s): min=59008, max=71808, per=100.00%, avg=65274.49, stdev=853.09, samples=120
+   iops        : min=14752, max=17952, avg=16318.61, stdev=213.26, samples=120
+  lat (usec)   : 100=0.01%, 250=35.45%, 500=57.17%, 750=3.29%, 1000=0.12%
+  lat (msec)   : 2=0.03%, 4=0.01%, 10=0.01%, 50=3.31%, 100=0.62%
+  cpu          : usr=3.16%, sys=6.70%, ctx=82444, majf=0, minf=41
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=100.0%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwt: total=979264,0,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+   READ: bw=63.7MiB/s (66.8MB/s), 63.7MiB/s-63.7MiB/s (66.8MB/s-66.8MB/s), io=3825MiB (4011MB), run=60036-60036msec
+
+Disk stats (read/write):
+  sdb: ios=977600/0, merge=0/0, ticks=1874212/0, in_queue=1549204, util=99.90%
+```
 
 For `/dev/sdc`:
 ```bash
@@ -2049,6 +2183,43 @@ sudo fio --name=random_read_iops --rw=randread --bs=4k --direct=1 \
          --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
          --time_based --filename=/dev/sdc --group_reporting
 ```
+> Returns
+```powershell
+random_read_iops: (g=0): rw=randread, bs=(R) 4096B-4096B, (W) 4096B-4096B, (T) 4096B-4096B, ioengine=libaio, iodepth=32
+fio-3.1
+Starting 1 process
+Jobs: 1 (f=1): [r(1)][100.0%][r=2574KiB/s,w=0KiB/s][r=643,w=0 IOPS][eta 00m:00s]
+random_read_iops: (groupid=0, jobs=1): err= 0: pid=3252: Sun Jan 19 08:29:55 2025
+   read: IOPS=645, BW=2583KiB/s (2645kB/s)(152MiB/60077msec)
+    slat (nsec): min=2400, max=66400, avg=5021.12, stdev=4168.97
+    clat (usec): min=32, max=157036, avg=49541.93, stdev=16634.05
+     lat (usec): min=36, max=157041, avg=49547.10, stdev=16634.00
+    clat percentiles (usec):
+     |  1.00th=[   176],  5.00th=[   510], 10.00th=[ 44827], 20.00th=[ 46924],
+     | 30.00th=[ 46924], 40.00th=[ 47449], 50.00th=[ 47449], 60.00th=[ 47973],
+     | 70.00th=[ 48497], 80.00th=[ 56361], 90.00th=[ 63177], 95.00th=[ 64750],
+     | 99.00th=[109577], 99.50th=[110625], 99.90th=[111674], 99.95th=[111674],
+     | 99.99th=[119014]
+   bw (  KiB/s): min= 2496, max= 3144, per=100.00%, avg=2583.95, stdev=61.48, samples=120
+   iops        : min=  624, max=  786, avg=645.95, stdev=15.38, samples=120
+  lat (usec)   : 50=0.02%, 100=0.19%, 250=2.81%, 500=1.97%, 750=0.10%
+  lat (usec)   : 1000=0.02%
+  lat (msec)   : 2=0.01%, 4=0.09%, 10=0.14%, 20=0.01%, 50=67.30%
+  lat (msec)   : 100=25.63%, 250=1.72%
+  cpu          : usr=0.22%, sys=0.64%, ctx=12716, majf=0, minf=42
+  IO depths    : 1=0.1%, 2=0.1%, 4=0.1%, 8=0.1%, 16=0.1%, 32=99.9%, >=64=0.0%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.1%, 64=0.0%, >=64=0.0%
+     issued rwt: total=38798,0,0, short=0,0,0, dropped=0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=32
+
+Run status group 0 (all jobs):
+   READ: bw=2583KiB/s (2645kB/s), 2583KiB/s-2583KiB/s (2645kB/s-2645kB/s), io=152MiB (159MB), run=60077-60077msec
+
+Disk stats (read/write):
+  sdc: ios=38703/0, merge=0/0, ticks=1914099/0, in_queue=1815520, util=99.89%
+```
+
 
 ---
 
