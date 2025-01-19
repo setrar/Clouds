@@ -1771,7 +1771,7 @@ az container create \
 az vm stop --resource-group lab1-resources --name lab1-vm
 
 # Resize the VM
-az vm resize --resource-group lab1-resources --name lab1-vm --size Standard_DS2_v2
+az vm resize --resource-group lab1-resources --name lab1-vm --size DS3_v2
 
 # Start the VM
 az vm start --resource-group lab1-resources --name lab1-vm
@@ -1781,7 +1781,7 @@ az vm start --resource-group lab1-resources --name lab1-vm
 # Verify the new size
 az vm show --resource-group lab1-resources --name lab1-vm --query "hardwareProfile.vmSize"
 ```
-> "Standard_DS2_v2"
+> "DS3_v2"
 
 If only the OS disk is showing and the data disks (e.g., `standard-ssd-disk` and `premium-ssd-disk`) are not, it indicates that the data disks are either:
 
@@ -1933,8 +1933,101 @@ tofu apply -target=azurerm_linux_virtual_machine.lab1_vm
 3. Initialize and mount the disks inside the VM.
 4. Use `/etc/fstab` to persist mounts across reboots.
 
+### Error when VM is not resized properly
 
 ```
 sudo mount /dev/sdc /mnt/premium_ssd
 ```
 > mount: /mnt/premium_ssd: wrong fs type, bad option, bad superblock on /dev/sdc, missing codepage or helper program, or other error.
+
+## **FIO** 
+
+Here's a step-by-step guide to install **FIO** and measure the sequential throughput and random read IOPS on the two devices (`/dev/sdb` for `standard_ssd_disk` and `/dev/sdc` for `premium_ssd_disk`).
+
+---
+
+### **1. Install FIO**
+Run the following commands to install **FIO** on Ubuntu 20.04:
+```bash
+sudo apt update
+sudo apt install -y fio
+```
+
+---
+
+### **2. Prepare the Devices**
+Before running FIO, ensure the devices are unmounted and ready for testing. If you previously mounted the devices, unmount them:
+```bash
+sudo umount /dev/sdb
+sudo umount /dev/sdc
+```
+
+---
+
+### **3. Run FIO Tests**
+
+#### **Sequential Throughput (64KB)**
+Use FIO to test the sequential read/write throughput with 64KB block sizes. Replace `<device>` with `/dev/sdb` (Standard SSD) or `/dev/sdc` (Premium SSD).
+
+```bash
+sudo fio --name=seq_readwrite_test --rw=rw --bs=64k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=<device> --group_reporting
+```
+
+#### Example:
+For `/dev/sdb`:
+```bash
+sudo fio --name=seq_readwrite_test --rw=rw --bs=64k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=/dev/sdb --group_reporting
+```
+
+For `/dev/sdc`:
+```bash
+sudo fio --name=seq_readwrite_test --rw=rw --bs=64k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=/dev/sdc --group_reporting
+```
+
+#### **Random Read IOPS (4KB)**
+Use FIO to test random read IOPS with 4KB block sizes.
+
+```bash
+sudo fio --name=random_read_iops --rw=randread --bs=4k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=<device> --group_reporting
+```
+
+#### Example:
+For `/dev/sdb`:
+```bash
+sudo fio --name=random_read_iops --rw=randread --bs=4k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=/dev/sdb --group_reporting
+```
+
+For `/dev/sdc`:
+```bash
+sudo fio --name=random_read_iops --rw=randread --bs=4k --direct=1 \
+         --ioengine=libaio --iodepth=32 --numjobs=1 --runtime=60 \
+         --time_based --filename=/dev/sdc --group_reporting
+```
+
+---
+
+### **4. Output Interpretation**
+FIO will output results like this:
+```plaintext
+seq_readwrite_test: (g=0): rw=rw, bs=64k-64k/64k-64k, ioengine=libaio, iodepth=32
+...
+write: IOPS=500, BW=31.2MiB/s (32.7MB/s), Latency (usec): min=10, max=1100, avg=50
+```
+
+- **IOPS**: Input/Output Operations Per Second.
+- **BW**: Bandwidth in MB/s.
+- **Latency**: Time taken for each I/O operation.
+
+For random read IOPS, focus on the **IOPS** value. For sequential throughput, focus on the **BW** (Bandwidth) value.
+
+
