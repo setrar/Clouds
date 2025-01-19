@@ -1775,10 +1775,163 @@ az vm resize --resource-group lab1-resources --name lab1-vm --size Standard_DS2_
 
 # Start the VM
 az vm start --resource-group lab1-resources --name lab1-vm
+```
 
+```
 # Verify the new size
 az vm show --resource-group lab1-resources --name lab1-vm --query "hardwareProfile.vmSize"
 ```
+> "Standard_DS2_v2"
+
+If only the OS disk is showing and the data disks (e.g., `standard-ssd-disk` and `premium-ssd-disk`) are not, it indicates that the data disks are either:
+
+1. **Not properly attached to the VM**.
+2. **Attached but not initialized or mounted inside the VM**.
+
+Here’s how to investigate and resolve the issue:
+
+---
+
+### **1. Verify the VM Configuration**
+Ensure that the `data_disk` blocks in the OpenTofu configuration correctly reference the managed disks and are applied successfully. Double-check the `lun` and `managed_disk_id` values.
+
+#### Check VM's Disk Configuration:
+```bash
+az vm show --name lab1-vm --resource-group lab1-resources --query "storageProfile.dataDisks" -o json
+```
+
+#### Expected Output:
+```json
+[
+  {
+    "lun": 0,
+    "name": "standard-ssd-disk",
+    "managedDisk": {
+      "id": "/subscriptions/your-subscription-id/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/standard-ssd-disk",
+      "storageAccountType": "StandardSSD_LRS"
+    },
+    "diskSizeGb": 50,
+    "caching": "ReadOnly"
+  },
+  {
+    "lun": 1,
+    "name": "premium-ssd-disk",
+    "managedDisk": {
+      "id": "/subscriptions/your-subscription-id/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/premium-ssd-disk",
+      "storageAccountType": "Premium_LRS"
+    },
+    "diskSizeGb": 50,
+    "caching": "ReadOnly"
+  }
+]
+```
+
+---
+
+### **2. Attach the Disks Manually (If Missing)**
+If the disks do not appear in the output, attach them manually to the VM:
+
+#### Attach `standard-ssd-disk`:
+```bash
+az vm disk attach \
+  --vm-name lab1-vm \
+  --resource-group lab1-resources \
+  --name standard-ssd-disk \
+  --caching ReadOnly \
+  --lun 0
+```
+
+#### Attach `premium-ssd-disk`:
+```bash
+az vm disk attach \
+  --vm-name lab1-vm \
+  --resource-group lab1-resources \
+  --name premium-ssd-disk \
+  --caching ReadOnly \
+  --lun 1
+```
+
+---
+
+### **3. Verify Attached Disks**
+Check if the disks are now properly attached to the VM:
+```bash
+az vm show --name lab1-vm --resource-group lab1-resources --query "storageProfile.dataDisks" -o table
+```
+
+---
+
+### **4. Inside the VM: Check and Initialize the Disks**
+SSH into the VM to ensure the attached disks are visible and initialize them.
+
+#### Check Attached Disks:
+```bash
+lsblk
+```
+
+Expected output:
+```plaintext
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   30G  0 disk
+├─sda1   8:1    0   30G  0 part /
+sdb      8:16   0   50G  0 disk
+sdc      8:32   0   50G  0 disk
+```
+
+#### Format and Mount Disks:
+If the disks are visible as `/dev/sdb` and `/dev/sdc`:
+1. Format the disks:
+   ```bash
+   sudo mkfs.ext4 /dev/sdb
+   sudo mkfs.ext4 /dev/sdc
+   ```
+
+2. Create mount points:
+   ```bash
+   sudo mkdir -p /mnt/standard_ssd
+   sudo mkdir -p /mnt/premium_ssd
+   ```
+
+3. Mount the disks:
+   ```bash
+   sudo mount /dev/sdb /mnt/standard_ssd
+   sudo mount /dev/sdc /mnt/premium_ssd
+   ```
+
+4. Verify the mount:
+   ```bash
+   df -h
+   ```
+
+---
+
+### **5. Persist the Mounts Across Reboots**
+Add the disks to `/etc/fstab` for automatic mounting after a reboot:
+```bash
+sudo blkid
+```
+
+Copy the `UUID` of each disk and add entries to `/etc/fstab`:
+```plaintext
+UUID=<UUID-of-sdb> /mnt/standard_ssd ext4 defaults 0 0
+UUID=<UUID-of-sdc> /mnt/premium_ssd ext4 defaults 0 0
+```
+
+---
+
+### **6. Reapply OpenTofu Configuration**
+If you suspect the disks were not correctly applied, reapply the OpenTofu configuration:
+```bash
+tofu apply -target=azurerm_linux_virtual_machine.lab1_vm
+```
+
+---
+
+### Summary
+1. Verify that the disks are attached using `az vm show`.
+2. Manually attach the disks if they are missing.
+3. Initialize and mount the disks inside the VM.
+4. Use `/etc/fstab` to persist mounts across reboots.
 
 
 ```
