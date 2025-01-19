@@ -527,5 +527,16 @@ func azure functionapp publish <your-function-app-name>
   ```
 - **Function App Name:** Replace `<your-function-app-name>` with the name of your Azure Function App.
 
-If the problem persists, let me know, and I can help troubleshoot further!
+## **azurite**
 
+```
+npm install -g azurite
+```
+> Returns
+```powershell
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+⠙
+```
