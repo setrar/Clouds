@@ -42,14 +42,17 @@ if __name__ == "__main__":
 ### **Step 3: OpenTofu Configuration**
 Define the Azure resources needed for the microservice deployment using OpenTofu.
 
-#### **`main.tf`**
+#### **`resource_group.tf`**
 ```hcl
 # Define Resource Group
 resource "azurerm_resource_group" "lab2_rg" {
-  name     = "lab2"
+  name     = "lab2-resources"
   location = "East US"
 }
+```
 
+#### **`main.tf`**
+```hcl
 # Define App Service Plan
 resource "azurerm_app_service_plan" "lab2_plan" {
   name                = "lab2-plan"
