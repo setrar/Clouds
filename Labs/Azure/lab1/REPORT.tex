@@ -516,9 +516,13 @@ Returns
 \begin{Highlighting}[]
 \NormalTok{VirtualMachine    PublicIPAddresses    PrivateIPAddresses}
 \OperatorTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}  \OperatorTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}  \OperatorTok{{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
-\NormalTok{lab1{-}vm          }\DecValTok{74.235}\OperatorTok{.}\DecValTok{215.246}       \DecValTok{10.0}\OperatorTok{.}\DecValTok{1.4}
+\NormalTok{lab1{-}vm           }\DecValTok{52.168}\OperatorTok{.}\DecValTok{95.147}        \DecValTok{10.0}\OperatorTok{.}\DecValTok{1.4}
 \end{Highlighting}
 \end{Shaded}
+
+\paragraph{Public IP Address:}\label{public-ip-address}
+
+http://52.168.95.147
 
     \section{Provision disks in VM and measure
 IOPS}\label{provision-disks-in-vm-and-measure-iops}
@@ -532,12 +536,40 @@ IOPS}\label{provision-disks-in-vm-and-measure-iops}
 \(\color{blue} \textbf{Your answer:}\)
 
 \begin{verbatim}
-tofu apply -var="vm_size=Standard_DS2_v2" -target=azurerm_linux_virtual_machine.lab1_vm
+VM Type: Standard_DS3_v2
 \end{verbatim}
 
-\begin{quote}
-Returns
-\end{quote}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Specification}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Standard\_DS3\_v2}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Standard\_B1ls}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{vCPUs} & 4 & 1 \\
+\textbf{Memory} & 14 GiB & 0.5 GiB \\
+\textbf{Temp Storage (SSD)} & 28 GiB & 4 GiB \\
+\textbf{Max Data Disks} & 16 & 2 \\
+\textbf{Max IOPS (Cached/Uncached)} & 16,000 / 12,800 & 200 / 320 \\
+\textbf{Max Network Interfaces} & 4 & 2 \\
+\textbf{Accelerated Networking} & Supported & Not Supported \\
+\textbf{Use Case} & Enterprise apps, DBs & Low-utilization, lightweight
+apps \\
+\end{longtable}
+
+\textbf{Summary}:\\
+The \textbf{DS3\_v2} is a high-performance VM for demanding workloads,
+while the \textbf{B1ls} is a budget-friendly option for lightweight
+tasks.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -549,6 +581,108 @@ Returns
 
 \(\color{blue} \textbf{Your answer:}\)
 
+Type of disks and sizes:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Standard SSD}: 50 GiB, \texttt{/dev/sdb}
+  (\texttt{StandardSSD\_LRS})\\
+\item
+  \textbf{Premium SSD}: 50 GiB, \texttt{/dev/sdc}
+  (\texttt{Premium\_LRS})
+\end{itemize}
+
+The virtual machine `lab1-vm' has two attached data disks:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.0568}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2273}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1023}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1591}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1364}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1591}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1591}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Lun
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Name
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Caching
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+CreateOption
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+DiskSizeGb
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ToBeDetached
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+DeleteOption
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & standard-ssd-disk & ReadOnly & Attach & 50 & False & Detach \\
+1 & premium-ssd-disk & ReadOnly & Attach & 50 & False & Detach \\
+\end{longtable}
+
+Where:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{/dev/sdb} corresponds to `standard-ssd-disk' (Standard SSD).
+\item
+  \texttt{/dev/sdc} corresponds to `premium-ssd-disk' (Premium SSD).
+\end{itemize}
+
+According to Azure's documentation, the expected performance metrics for
+these disk types are:
+
+\textbf{Standard SSD (E10 - 50 GiB):} - \textbf{IOPS:} 500 -
+\textbf{Throughput:} 60 MB/s
+
+\textbf{Premium SSD (P10 - 50 GiB):} - \textbf{IOPS:} 500 -
+\textbf{Throughput:} 100 MB/s
+
+These specifications are detailed in Azure's managed disk pricing
+documentation.
+
+Comparing these expected values to the \texttt{fio} test results:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\texttt{/dev/sdb} (Standard SSD):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Measured IOPS: 3,128
+  \item
+    Measured Throughput: 196 MiB/s (approximately 205 MB/s)
+  \end{itemize}
+\item
+  \textbf{\texttt{/dev/sdc} (Premium SSD):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Measured IOPS: 421
+  \item
+    Measured Throughput: 26.3 MiB/s (approximately 27.6 MB/s)
+  \end{itemize}
+\end{itemize}
+
+The measured performance for \texttt{/dev/sdb} significantly exceeds
+Azure's documented expectations for a Standard SSD of this size, while
+\texttt{/dev/sdc} falls below the expected performance for a Premium
+SSD.
+
+I checked if there was a mismatch between the 2 disks but couldn't find
+any.
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \(\color{blue}\textbf{What is the sequencing bandwidth and random IOPS you measured with FIO?}\)
@@ -556,6 +690,147 @@ Returns
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \(\color{blue} \textbf{Your answer:}\)
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Standard SSD (\texttt{/dev/sdb})}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Sequencing Bandwidth}: 196 MiB/s\\
+  \item
+    \textbf{Random IOPS}: 3,128
+  \end{itemize}
+\item
+  \textbf{Premium SSD (\texttt{/dev/sdc})}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Sequencing Bandwidth}: 26.3 MiB/s\\
+  \item
+    \textbf{Random IOPS}: 421
+  \end{itemize}
+\end{itemize}
+
+Here's a detailed explanation of the \textbf{FIO test results} for the
+two disks:
+
+\subsubsection{\texorpdfstring{\textbf{Standard SSD
+(\texttt{/dev/sdb}):}}{Standard SSD (/dev/sdb):}}\label{standard-ssd-devsdb}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Sequencing Bandwidth (196 MiB/s):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    This indicates the disk's performance when reading/writing large
+    blocks of data sequentially.
+  \item
+    The measured value of \textbf{196 MiB/s} is typical for a Standard
+    SSD, as sequential operations leverage the SSD's design for high
+    throughput.
+  \end{itemize}
+\item
+  \textbf{Random IOPS (3,128):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{IOPS (Input/Output Operations Per Second)} measures the
+    performance of small, random read/write operations (4 KB blocks).
+  \item
+    A higher IOPS value reflects the disk's ability to handle small,
+    frequent operations efficiently.
+  \item
+    The value of \textbf{3,128 IOPS} aligns with the Standard SSD's
+    performance for workloads with random access patterns (e.g.,
+    database queries).
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{\texorpdfstring{\textbf{Premium SSD
+(\texttt{/dev/sdc}):}}{Premium SSD (/dev/sdc):}}\label{premium-ssd-devsdc}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Sequencing Bandwidth (26.3 MiB/s):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Surprisingly lower than expected for a Premium SSD. This might
+    indicate:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Misconfiguration in the disk or VM.
+    \item
+      Bottlenecks such as network bandwidth limits (if the disk is
+      remotely managed).
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Random IOPS (421):}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The random IOPS measured is significantly below Azure's advertised
+    range for Premium SSDs, which typically exceed 5,000 IOPS for this
+    size. This low value may again reflect:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Incorrect caching or mounting settings.
+    \item
+      Throttling due to VM configuration or tier mismatch.
+    \end{itemize}
+  \end{itemize}
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsubsection{\texorpdfstring{\textbf{Possible Discrepancies to
+Investigate:}}{Possible Discrepancies to Investigate:}}\label{possible-discrepancies-to-investigate}
+
+\begin{itemize}
+\tightlist
+\item
+  Confirm the disk types using Azure CLI or other tools
+  (\texttt{az\ disk\ show}).
+\item
+  Ensure the disks are attached with proper configurations (e.g.,
+  Premium SSDs benefit from \texttt{ReadWrite} caching).
+\item
+  Review the VM size to confirm it supports the performance expected for
+  these disk types.
+\item
+  Rerun tests with adjusted parameters, such as \texttt{numjobs},
+  \texttt{iodepth}, and block sizes (\texttt{bs}) to ensure realistic
+  workloads.
+\end{itemize}
+
+\paragraph{All the FIO testing results can be seen
+here:}\label{all-the-fio-testing-results-can-be-seen-here}
+
+\begin{itemize}
+\tightlist
+\item
+  https://github.com/setrar/Clouds/tree/main/Labs/Azure/lab1/IaC\#fio
+\end{itemize}
 
     \section{Deploy dockerized static site via Azure
 ACR}\label{deploy-dockerized-static-site-via-azure-acr}
@@ -570,11 +845,18 @@ ACR}\label{deploy-dockerized-static-site-via-azure-acr}
 
 http://acrclouds2025eurbr.eastus.azurecontainer.io
 
+\paragraph{All the manual commands needed to manage the ACR can be found
+here}\label{all-the-manual-commands-needed-to-manage-the-acr-can-be-found-here}
+
+https://github.com/setrar/Clouds/blob/main/Labs/Azure/lab1/IaC/README.md\#docker
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \(\color{blue}\textbf{What is the size of the container image used?}\)
 
-192MB
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\(\color{blue} \textbf{Your answer:}\)
 
 \(\color{blue}\textbf{ (You can find this by listing the size of all images in your container registry)}\)
 
@@ -595,9 +877,34 @@ Returns:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+Docker Image size on the VM: 192MB
 
-\(\color{blue} \textbf{Your answer:}\)
+\begin{verbatim}
+az acr repository show-manifests --name acrclouds2025eurbr \
+   --repository static-site --detail --query '[].{Image: tags[0], Size: imageSize}' --output table
+\end{verbatim}
+
+\begin{quote}
+Returns
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{This command has been deprecated and will be removed }\KeywordTok{in}\NormalTok{ a future release}\OperatorTok{.}\NormalTok{ Use }\StringTok{\textquotesingle{}acr manifest list{-}metadata\textquotesingle{}}\NormalTok{ instead}\OperatorTok{.}
+\NormalTok{Image    Size}
+\OperatorTok{{-}{-}{-}{-}{-}{-}{-}}  \OperatorTok{{-}{-}{-}{-}{-}{-}{-}{-}}
+\NormalTok{v1       }\DecValTok{72972941}
+\end{Highlighting}
+\end{Shaded}
+
+Container Size on ACR: 69MB
+
+\(\text{Size in MB} = \frac{72972941}{1048576} \approx 69.58 \, \text{MB}\)
+
+So, \(72972941 \, \text{bytes} \approx 69 \, \text{MB}\) (rounded to the
+nearest whole number).
+
+Which is \(\frac{1}{2}\) of the original docker image size
 
     \section{Create Azure webapp static
 site}\label{create-azure-webapp-static-site}
@@ -610,6 +917,25 @@ site}\label{create-azure-webapp-static-site}
 
 https://webappclouds2025eurbr.azurewebsites.net
 
+\paragraph{The IaC file that created the WebApp can be found
+here}\label{the-iac-file-that-created-the-webapp-can-be-found-here}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  webapps.tf (.tf for terraform)
+\end{itemize}
+
+https://github.com/setrar/Clouds/blob/main/Labs/Azure/lab1/IaC/webapps.tf
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  The github repo containing the APS.NET content can be found here
+\end{itemize}
+
+https://github.com/setrar/CloudsASPXContent
+
     \section{Deploy static site on Azure Blob
 Store}\label{deploy-static-site-on-azure-blob-store}
 
@@ -621,7 +947,20 @@ Store}\label{deploy-static-site-on-azure-blob-store}
 
 https://blobstoreclouds2025eurbr.z13.web.core.windows.net
 
-    \(\Large{\textbf{Summary Questions. }}\)
+\paragraph{The IaC file that created the blob store can be found
+here}\label{the-iac-file-that-created-the-blob-store-can-be-found-here}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  blockstores.tf (.tf for terraform)
+\end{itemize}
+
+https://github.com/setrar/Clouds/blob/main/Labs/Azure/lab1/IaC/blockstores.tf
+
+    \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\(\Large{\textbf{Summary Questions. }}\)
 
     \(\color{blue}\textbf{You should have created a RG for each assignment separately.}\)
 \(\color{blue}\textbf{Report the cost distribution across various RGs that you can find in }\)
@@ -634,30 +973,18 @@ https://blobstoreclouds2025eurbr.z13.web.core.windows.net
 For the entire lab (Assignement 1), one resource group was used
 \texttt{lab1-resources}
 
+€2.20
+
 IaC (Infrastructure as Code), using \texttt{OpenTofu} helps saving cost
 by creating all the infrastructure at once and tearing it down all
-together when needed. Some extra commands need to applied manually but
-in general running the scripts takes about 1 minute to launch.
+together when needed. Some extra commands needed to applied manually but
+in general running the scripts took about 1 minute to launch.
 
 \begin{figure}
 \centering
 \pandocbounded{\includegraphics[keepaspectratio]{images/lab1-cost-analysis.png}}
 \caption{image}
 \end{figure}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{ }{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-
-\end{Verbatim}
-\end{tcolorbox}
 
 
     % Add a bibliography block to the postdoc
