@@ -1577,3 +1577,85 @@ lab1-vm           172.191.25.162       10.0.1.4
 ssh azureuser@172.191.25.162
 ```
 
+## Docker Static WebSite
+
+Here’s a step-by-step guide to creating a Dockerized static site, running it in a VM, and verifying it with `curl`. The steps use the reference from AzureMOL Chapter 19.2 for a simple Nginx Docker container.
+
+---
+
+### Step 1: Create a Static HTML File
+Inside your VM, create a directory for the project and add an HTML file:
+
+```bash
+mkdir docker-static-site
+cd docker-static-site
+echo "<!DOCTYPE html><html><head><title>Static Site</title></head><body><h1>Welcome to My Static Site</h1></body></html>" > index.html
+```
+
+---
+
+### Step 2: Create a Dockerfile
+Create a `Dockerfile` in the same directory to set up an Nginx container:
+
+```bash
+cat <<EOF > Dockerfile
+# Use the official Nginx image as the base
+FROM nginx:latest
+
+# Copy the static HTML file to the default Nginx directory
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expose port 80
+EXPOSE 80
+EOF
+```
+
+---
+
+### Step 3: Build the Docker Image
+Build the Docker image locally:
+
+```bash
+docker build -t static-site .
+```
+
+---
+
+### Step 4: Run the Docker Container
+Run the container and map port 80 on the host to port 80 on the container:
+
+```bash
+docker run -d -p 8080:80 --name static-site-container static-site
+```
+
+---
+
+### Step 5: Verify the Deployment with `curl`
+Use `curl` to ensure the site is served correctly:
+
+```bash
+curl http://localhost:8080
+```
+
+You should see the HTML content:
+```html
+<!DOCTYPE html>
+<html>
+<head><title>Static Site</title></head>
+<body><h1>Welcome to My Static Site</h1></body>
+</html>
+```
+
+---
+
+### Step 6: Cleanup (Optional)
+If you want to stop the container and clean up resources:
+
+```bash
+docker stop static-site-container
+docker rm static-site-container
+docker rmi static-site
+```
+
+---
+
