@@ -1581,6 +1581,12 @@ ssh azureuser@172.191.25.162
 
 Here’s a step-by-step guide to creating a Dockerized static site, running it in a VM, and verifying it with `curl`. The steps use the reference from AzureMOL Chapter 19.2 for a simple Nginx Docker container.
 
+### Step 0: Copy the Static HTML File
+
+```
+cat docker-index.html| pbcopy
+```
+
 ---
 
 ### Step 1: Create a Static HTML File
@@ -1589,7 +1595,8 @@ Inside your VM, create a directory for the project and add an HTML file:
 ```bash
 mkdir docker-static-site
 cd docker-static-site
-echo "<!DOCTYPE html><html><head><title>Static Site</title></head><body><h1>Welcome to My Static Site</h1></body></html>" > index.html
+vi index.html
+<paste all the content copied above>
 ```
 
 ---
@@ -1642,22 +1649,29 @@ You should see the HTML content:
 <!DOCTYPE html>
 <html>
 <head><title>Static Site</title></head>
-<body><h1>Welcome to My Static Site</h1></body>
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <header>
+    <h1>Welcome to the Lab1 &#x1F324; Container Registry</h1>
+  </header>
+  <main>
+    <p>The purpose of this <b>lab1</b> is to demonstrate how to use IaC (Infrastructure as Code)</p>
+    <p>The entire IaC Code for this lab can be accessed here  &#x1F449;<a href="https://github.com/setrar/Clouds/tree/main/Labs/Azure/lab1/IaC" target="_blank">IaC Lab1</a> </p>
+  </main>
+  <footer>
+    <p>&copy; 2025 Student: ......</p>
+  </footer>
+</body>
+</html>
 </html>
 ```
 
 ---
 
-### Step 6: Cleanup (Optional)
-If you want to stop the container and clean up resources:
+### Step 6: Get the ACR Login Server from Azure Shell
+After the registry is created, you can retrieve the login server using Azure CLI:
 
-```bash
-docker stop static-site-container
-docker rm static-site-container
-docker rmi static-site
-```
-
-- [ ] List the ACR
 
 ```
 az acr list --resource-group lab1-resources --query "[].{loginServer:loginServer}" -o table
@@ -1668,9 +1682,14 @@ LoginServer
 -----------------------------
 acrclouds2025eurbr.azurecr.io
 ```
-- [ ] Get the ACR credentials
 
-```az acr credential show --name acrclouds2025eurbr           
+### Step 7: Docker Login to ACR from the VM
+
+```
+az acr credential show --name acrclouds2025eurbr
+```
+> Returns
+```json
 {
   "passwords": [
     {
@@ -1686,5 +1705,35 @@ acrclouds2025eurbr.azurecr.io
 }
 ```
 
+### Step 8: Docker Login to ACR from the VM
+
+1. **Login to ACR**  
+   From the VM:
+   ```bash
+   docker login acrclouds2025eurbr.azurecr.io
+   ```
+
+   Enter the username and password retrieved earlier.
+
 ---
+
+### Step 9: Push the Docker Image to ACR
+
+1. **Tag Your Docker Image**  
+   Tag the local image with the ACR login server:
+   ```bash
+   docker tag static-site acrclouds2025eurbr.azurecr.io/static-site:v1
+   ```
+
+2. **Push the Docker Image**  
+   Push the image to the ACR:
+   ```bash
+   docker push acrclouds2025eurbr.azurecr.io/static-site:v1
+   ```
+
+3. **Verify the Image in ACR**  
+   Check that the image is successfully pushed:
+   ```bash
+   az acr repository list --name acrclouds2025eurbr --output table
+   ```
 
