@@ -1764,3 +1764,18 @@ az container create \
 ```
 > / Running ..
 
+## Resize VM
+
+```
+# Stop the VM
+az vm stop --resource-group lab1-resources --name lab1-vm
+
+# Resize the VM
+az vm resize --resource-group lab1-resources --name lab1-vm --size Standard_DS2_v2
+
+# Start the VM
+az vm start --resource-group lab1-resources --name lab1-vm
+
+# Verify the new size
+az vm show --resource-group lab1-resources --name lab1-vm --query "hardwareProfile.vmSize"
+```
