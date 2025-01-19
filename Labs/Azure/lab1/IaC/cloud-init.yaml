@@ -4,6 +4,7 @@ packages:
   - nginx
   - nodejs
   - npm
+  - docker.io
 
 write_files:
   # NGINX Configuration for Reverse Proxy
@@ -126,6 +127,11 @@ write_files:
       WantedBy=multi-user.target
 
 runcmd:
+  # Enable and start Docker service
+  - systemctl enable docker
+  - systemctl start docker
+  - usermod -aG docker azureuser  # Add the default user to the Docker group
+
   # Ensure NGINX is restarted with the updated configuration
   - systemctl restart nginx
 
@@ -139,4 +145,5 @@ runcmd:
   - systemctl daemon-reload
   - systemctl enable myapp
   - systemctl start myapp
+
 
