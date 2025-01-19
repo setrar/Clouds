@@ -1657,5 +1657,34 @@ docker rm static-site-container
 docker rmi static-site
 ```
 
+- [ ] List the ACR
+
+```
+az acr list --resource-group lab1-resources --query "[].{loginServer:loginServer}" -o table
+```
+> Returns
+```powershell 
+LoginServer
+-----------------------------
+acrclouds2025eurbr.azurecr.io
+```
+- [ ] Get the ACR credentials
+
+```az acr credential show --name acrclouds2025eurbr           
+{
+  "passwords": [
+    {
+      "name": "password",
+      "value": "IAHZCrJhXjFGXwobviouskaXDCwulFuJ5T/YdIs5gZMICRCsA5SH"
+    },
+    {
+      "name": "password2",
+      "value": "91HXoXDCwulFuJ5T/YdIs5gZMI1dQvjbJobviousvXYTxQuIyt"
+    }
+  ],
+  "username": "acrclouds2025eurbr"
+}
+```
+
 ---
 
