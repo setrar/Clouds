@@ -1755,7 +1755,7 @@ az container create \
   --cpu 1 \
   --memory 1 \
   --ports 80 \
-  --dns-name-label acrclouds2025eurbr \     
+  --dns-name-label acrclouds2025eurbr \
   --query ipAddress.fqdn \
   --os-type Linux \
   --registry-login-server acrclouds2025eurbr.azurecr.io \
