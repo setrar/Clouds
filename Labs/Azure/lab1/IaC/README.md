@@ -1779,3 +1779,9 @@ az vm start --resource-group lab1-resources --name lab1-vm
 # Verify the new size
 az vm show --resource-group lab1-resources --name lab1-vm --query "hardwareProfile.vmSize"
 ```
+
+
+```
+sudo mount /dev/sdc /mnt/premium_ssd
+```
+> mount: /mnt/premium_ssd: wrong fs type, bad option, bad superblock on /dev/sdc, missing codepage or helper program, or other error.
