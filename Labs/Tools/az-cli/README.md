@@ -452,3 +452,58 @@ Here’s a list of **basic Azure CLI commands** grouped by common use cases. The
 
 ---
 
+## **func**
+
+
+### **Step 1: Install Azure Functions Core Tools**
+The Azure Functions Core Tools allow you to create, test, and publish Azure Functions from your local environment.
+
+#### macOS Installation with Homebrew:
+If you’re on macOS, the easiest way to install the tools is with Homebrew:
+```bash
+brew tap azure/functions
+brew install azure-functions-core-tools@4
+```
+
+#### Verify the Installation:
+After installation, confirm that the `func` command is available:
+```bash
+func --version
+```
+
+---
+
+### **Step 2: Add `func` to Your `PATH` (If Necessary)**
+If `func` is installed but still not recognized, ensure its binary is in your `PATH`. For example:
+1. Locate the installation directory:
+   ```bash
+   which func
+   ```
+2. Add the directory to your shell configuration (e.g., `.zshrc` or `.bashrc`):
+   ```bash
+   export PATH=$PATH:/path/to/azure-functions-core-tools
+   ```
+3. Reload the shell configuration:
+   ```bash
+   source ~/.zshrc
+   ```
+
+---
+
+### **Step 3: Publish Your Azure Function**
+Once the `func` tool is installed and accessible, you can publish your Azure Function to the specified Azure Function App:
+```bash
+func azure functionapp publish <your-function-app-name>
+```
+
+---
+
+### **Troubleshooting Tips**
+- **Azure CLI Installation:** Ensure that the Azure CLI is installed and authenticated:
+  ```bash
+  az login
+  ```
+- **Function App Name:** Replace `<your-function-app-name>` with the name of your Azure Function App.
+
+If the problem persists, let me know, and I can help troubleshoot further!
+
