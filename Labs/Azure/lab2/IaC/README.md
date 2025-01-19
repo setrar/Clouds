@@ -628,3 +628,69 @@ azurerm_resource_group.lab2_rg: Destruction complete after 19s
 
 Destroy complete! Resources: 3 destroyed.
 ```
+
+# References
+
+## WebApp Tools
+
+The message indicates that the `az webapp ssh` command is currently in preview mode, meaning it's still under development and may not be fully stable or supported. Despite being in preview, you can use it to SSH into your Linux-based Azure Web App, but there are some limitations or changes that might occur in future releases.
+
+Here’s how to proceed:
+
+---
+
+### **Steps to Use `az webapp ssh`**
+
+1. **Ensure the App is Linux-based:**
+   The `az webapp ssh` command only works with Linux-based Azure Web Apps. You can verify your app's OS using:
+   ```bash
+   az webapp show --name lab2-python-app --resource-group lab2-resources --query operatingSystem
+   ```
+
+   If the output is `"Linux"`, you can proceed. If not, SSH access is not supported for your app.
+
+2. **Ensure the Web App is Running:**
+   The web app must be in a running state. Start it if necessary:
+   ```bash
+   az webapp start --name lab2-python-app --resource-group lab2-resources
+   ```
+
+3. **Run the SSH Command:**
+   Execute the following command:
+   ```bash
+   az webapp ssh --name lab2-python-app --resource-group lab2-resources
+   ```
+
+   If successful, you’ll get an interactive shell session inside the container hosting your app.
+
+---
+
+### **Troubleshooting SSH Issues**
+
+#### 1. **Check Deployment Environment**
+If you're unable to SSH, verify the deployment environment and runtime settings:
+```bash
+az webapp config show --name lab2-python-app --resource-group lab2-resources
+```
+
+#### 2. **Check Logs for Errors**
+If SSH fails, view the logs for more details:
+```bash
+az webapp log tail --name lab2-python-app --resource-group lab2-resources
+```
+
+#### 3. **Alternative: Access Kudu Console**
+If `az webapp ssh` is not working, you can use the **Kudu Console** (advanced management console for Azure Web Apps):
+- Navigate to: `https://<your-app-name>.scm.azurewebsites.net/DebugConsole`
+- This provides a web-based SSH-like environment.
+
+---
+
+### Additional Notes
+- The preview status means that features may change, and bugs could exist. Regularly update the Azure CLI to ensure you're using the latest version:
+  ```bash
+  az upgrade
+  ```
+- If SSH is critical and the preview command doesn’t meet your needs, you may consider hosting the app in a VM or container with full SSH access.
+
+Let me know if you encounter any specific errors or need further guidance!
