@@ -1771,7 +1771,7 @@ az container create \
 az vm stop --resource-group lab1-resources --name lab1-vm
 
 # Resize the VM
-az vm resize --resource-group lab1-resources --name lab1-vm --size DS3_v2
+az vm resize --resource-group lab1-resources --name lab1-vm --size Standard_DS3_v2
 
 # Start the VM
 az vm start --resource-group lab1-resources --name lab1-vm
@@ -1781,7 +1781,7 @@ az vm start --resource-group lab1-resources --name lab1-vm
 # Verify the new size
 az vm show --resource-group lab1-resources --name lab1-vm --query "hardwareProfile.vmSize"
 ```
-> "DS3_v2"
+> "Standard_DS3_v2"
 
 If only the OS disk is showing and the data disks (e.g., `standard-ssd-disk` and `premium-ssd-disk`) are not, it indicates that the data disks are either:
 
@@ -1797,33 +1797,12 @@ Ensure that the `data_disk` blocks in the OpenTofu configuration correctly refer
 
 #### Check VM's Disk Configuration:
 ```bash
-az vm show --name lab1-vm --resource-group lab1-resources --query "storageProfile.dataDisks" -o json
+az vm show --name lab1-vm --resource-group lab1-resources --query "storageProfile.dataDisks" -o table
 ```
 
 #### Expected Output:
-```json
-[
-  {
-    "lun": 0,
-    "name": "standard-ssd-disk",
-    "managedDisk": {
-      "id": "/subscriptions/your-subscription-id/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/standard-ssd-disk",
-      "storageAccountType": "StandardSSD_LRS"
-    },
-    "diskSizeGb": 50,
-    "caching": "ReadOnly"
-  },
-  {
-    "lun": 1,
-    "name": "premium-ssd-disk",
-    "managedDisk": {
-      "id": "/subscriptions/your-subscription-id/resourceGroups/lab1-resources/providers/Microsoft.Compute/disks/premium-ssd-disk",
-      "storageAccountType": "Premium_LRS"
-    },
-    "diskSizeGb": 50,
-    "caching": "ReadOnly"
-  }
-]
+```powershell
+[]
 ```
 
 ---
@@ -1840,6 +1819,7 @@ az vm disk attach \
   --caching ReadOnly \
   --lun 0
 ```
+>  / Running ..
 
 #### Attach `premium-ssd-disk`:
 ```bash
@@ -1850,6 +1830,7 @@ az vm disk attach \
   --caching ReadOnly \
   --lun 1
 ```
+>  / Running ..
 
 ---
 
@@ -1857,6 +1838,13 @@ az vm disk attach \
 Check if the disks are now properly attached to the VM:
 ```bash
 az vm show --name lab1-vm --resource-group lab1-resources --query "storageProfile.dataDisks" -o table
+```
+> Returns
+```powershell
+Lun    Name               Caching    CreateOption    DiskSizeGb    ToBeDetached    DeleteOption
+-----  -----------------  ---------  --------------  ------------  --------------  --------------
+0      standard-ssd-disk  ReadOnly   Attach          50            False           Detach
+1      premium-ssd-disk   ReadOnly   Attach          50            False           Detach
 ```
 
 ---
@@ -1871,11 +1859,15 @@ lsblk
 
 Expected output:
 ```plaintext
-NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
-sda      8:0    0   30G  0 disk
-├─sda1   8:1    0   30G  0 part /
-sdb      8:16   0   50G  0 disk
-sdc      8:32   0   50G  0 disk
+NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda       8:0    0   30G  0 disk 
+├─sda1    8:1    0 29.9G  0 part /
+├─sda14   8:14   0    4M  0 part 
+└─sda15   8:15   0  106M  0 part /boot/efi
+sdb       8:16   0   28G  0 disk 
+└─sdb1    8:17   0   28G  0 part /mnt
+sdc       8:32   0   50G  0 disk 
+sdd       8:48   0   50G  0 disk
 ```
 
 #### Format and Mount Disks:
@@ -1884,6 +1876,12 @@ If the disks are visible as `/dev/sdb` and `/dev/sdc`:
    ```bash
    sudo mkfs.ext4 /dev/sdb
    sudo mkfs.ext4 /dev/sdc
+   ```
+   > Returns
+   ```powershell
+   mke2fs 1.44.1 (24-Mar-2018)
+   Found a dos partition table in /dev/sdb
+   Proceed anyway? (y,N) y
    ```
 
 2. Create mount points:
@@ -1895,50 +1893,88 @@ If the disks are visible as `/dev/sdb` and `/dev/sdc`:
 3. Mount the disks:
    ```bash
    sudo mount /dev/sdb /mnt/standard_ssd
+   ```
+
+   ##### Error when VM is not resized properly when the VM is too small
+
+   ```
    sudo mount /dev/sdc /mnt/premium_ssd
    ```
+   > mount: /mnt/premium_ssd: wrong fs type, bad option, bad superblock on /dev/sdc, missing codepage or helper program, or other error.
 
-4. Verify the mount:
-   ```bash
-   df -h
-   ```
+
+The error indicates that `/dev/sdc` (your premium SSD disk) is either unformatted or has an unsupported file system. To resolve this issue, you need to check the disk's state, format it with a supported file system, and then mount it.
 
 ---
 
-### **5. Persist the Mounts Across Reboots**
-Add the disks to `/etc/fstab` for automatic mounting after a reboot:
+##### **Steps to Fix the Issue**
+
+###### **1. Verify Disk State**
+Run the following command to check the state of the disk:
 ```bash
-sudo blkid
+sudo lsblk
 ```
 
-Copy the `UUID` of each disk and add entries to `/etc/fstab`:
-```plaintext
-UUID=<UUID-of-sdb> /mnt/standard_ssd ext4 defaults 0 0
-UUID=<UUID-of-sdc> /mnt/premium_ssd ext4 defaults 0 0
-```
+Look for `/dev/sdc` in the output. If the `TYPE` field is `disk` and there are no partitions under it, it means the disk is unformatted.
 
 ---
 
-### **6. Reapply OpenTofu Configuration**
-If you suspect the disks were not correctly applied, reapply the OpenTofu configuration:
+###### **2. Check for Existing File System**
+Run the following command to check if a file system exists on the disk:
 ```bash
-tofu apply -target=azurerm_linux_virtual_machine.lab1_vm
+sudo file -s /dev/sdc
 ```
+
+- **Output Example**:
+  - `data`: Indicates the disk is unformatted.
+  - `ext4 filesystem`: Indicates an existing file system (e.g., `ext4`).
 
 ---
 
-### Summary
-1. Verify that the disks are attached using `az vm show`.
-2. Manually attach the disks if they are missing.
-3. Initialize and mount the disks inside the VM.
-4. Use `/etc/fstab` to persist mounts across reboots.
+###### **3. Format the Disk**
+If the disk is unformatted or you want to reformat it, use the following command to format it with `ext4`:
 
-### Error when VM is not resized properly
-
+```bash
+sudo mkfs.ext4 /dev/sdc
 ```
+
+- **Explanation**:
+  - `mkfs.ext4`: Creates an `ext4` file system on the disk.
+  - `/dev/sdc`: Specifies the target disk.
+
+---
+
+###### **4. Mount the Disk**
+After formatting, mount the disk again:
+```bash
+sudo mkdir -p /mnt/premium_ssd
 sudo mount /dev/sdc /mnt/premium_ssd
 ```
-> mount: /mnt/premium_ssd: wrong fs type, bad option, bad superblock on /dev/sdc, missing codepage or helper program, or other error.
+
+---
+
+###### **5. Verify the Mount**
+Check if the disk is mounted successfully:
+```bash
+df -h
+```
+> Returns
+```
+Filesystem      Size  Used Avail Use% Mounted on
+udev            6.9G     0  6.9G   0% /dev
+tmpfs           1.4G  736K  1.4G   1% /run
+/dev/sda1        29G  2.2G   27G   8% /
+tmpfs           6.9G     0  6.9G   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           6.9G     0  6.9G   0% /sys/fs/cgroup
+/dev/sda15      105M  5.3M  100M   5% /boot/efi
+/dev/sdb1        28G   36K   26G   1% /mnt
+tmpfs           1.4G     0  1.4G   0% /run/user/1000
+/dev/sdc         49G   24K   47G   1% /mnt/premium_ssd
+```
+
+You should see `/mnt/premium_ssd` listed with the available disk space.
+
 
 ## **FIO** 
 
