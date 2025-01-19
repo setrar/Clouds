@@ -352,7 +352,7 @@ resource "azurerm_linux_web_app" "lab2_app" {
 After deploying the infrastructure, upload your `app.zip` file to Azure using the Azure CLI:
 
 ```bash
-az webapp deploy --resource-group lab2 --name lab2-python-app --src-path app.zip --type zip
+az webapp deploy --resource-group lab2-resources --name lab2-python-app --src-path app.zip --type zip
 ```
 > Returns
 ```powershell
@@ -389,7 +389,7 @@ Status: Site started successfully. Time: 48(s)
 Retrieve the public URL of the deployed app:
 
 ```bash
-az webapp show --name lab2-python-app --resource-group lab2 --query "defaultHostName" -o tsv
+az webapp show --name lab2-python-app --resource-group lab2-resources --query "defaultHostName" -o tsv
 ```
 > lab2-python-app.azurewebsites.net
 
@@ -414,7 +414,7 @@ You can delete all deployed files by resetting the deployment source:
 ```bash
 
 ```
-> az webapp deployment reset-configuration --name lab2-python-app --resource-group lab2
+> az webapp deployment reset-configuration --name lab2-python-app --resource-group lab2-resources
 
 
 This command clears out the deployment files and resets the app configuration.
@@ -447,7 +447,7 @@ This command clears out the deployment files and resets the app configuration.
 If you want to delete the web app entirely (along with the deployment), use the following command:
 
 ```bash
-az webapp delete --name lab2-python-app --resource-group lab2
+az webapp delete --name lab2-python-app --resource-group lab2-resources
 ```
 
 This deletes the entire app, including its deployment, configuration, and associated resources.
@@ -459,7 +459,7 @@ After performing any of the above steps, verify that the app is no longer access
 1. Try accessing the app’s URL in your browser.
 2. Use the CLI to check its status:
    ```bash
-   az webapp show --name lab2-python-app --resource-group lab2
+   az webapp show --name lab2-python-app --resource-group lab2-resources
    ```
 
 ## Destroy the service
