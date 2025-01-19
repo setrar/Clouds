@@ -464,12 +464,34 @@ If you’re on macOS, the easiest way to install the tools is with Homebrew:
 brew tap azure/functions
 brew install azure-functions-core-tools@4
 ```
+:x: requires XTool to be updated (too long)
+
+#### macOS Installation with Homebrew:
+If you’re on macOS, the easiest way to install the tools is with node:
+
+```
+npm install -g azure-functions-core-tools@4 --unsafe-perm true
+```
+> Results
+```powershell
+
+added 35 packages in 14m
+
+5 packages are looking for funding
+  run `npm fund` for details
+npm notice
+npm notice New major version of npm available! 10.9.2 -> 11.0.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.0.0
+npm notice To update run: npm install -g npm@11.0.0
+npm notice
+```
 
 #### Verify the Installation:
 After installation, confirm that the `func` command is available:
 ```bash
 func --version
 ```
+> 4.0.6821
 
 ---
 
