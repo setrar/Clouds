@@ -28,12 +28,18 @@ resource "azurerm_linux_function_app" "lab2" {
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
 
   site_config {
-    always_on        = true
+    always_on          = true
+    application_stack {
+      python_version = "3.9" # Specify Python version
+    }
   }
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
+    FUNCTIONS_WORKER_RUNTIME = "python" # Specify runtime
+    SCM_DO_BUILD_DURING_DEPLOYMENT = "true"
+    WEBSITE_RUN_FROM_PACKAGE = "1"     # Enable deployment from package
   }
+
 
 }
 
@@ -51,10 +57,10 @@ resource "null_resource" "github_deployment" {
 
       # Download repository
       echo "Downloading repository..."
-      curl -L https://github.com/setrar/CloudsNIFunc/archive/refs/heads/main.zip -o repo.zip
+      curl -L https://github.com/setrar/CloudsNIFunction/archive/refs/heads/main.zip -o repo.zip
       unzip repo.zip
-      mv CloudsNIFunc-main/* .
-      rm -rf CloudsNIFunc-main repo.zip
+      mv CloudsNIFunction-main/* .
+      rm -rf CloudsNIFunction-main repo.zip
 
       # Create zip and deploy with retries
       echo "Creating zip and starting deployment..."
