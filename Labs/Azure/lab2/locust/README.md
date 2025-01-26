@@ -43,10 +43,13 @@ locust -f locustfile.py --host=${HOST} \
          --csv=logs/locust_log-webapp-u10r2t3.csv
 ```
 
+## Remote Testing
+
+- [ ] Run the `NumericalIntegration` WebApp on Azure
 
 ```
 HOST=https://webappclouds2025nibr.azurewebsites.net
 locust -f locustfile.py --host=${HOST} \
          --headless --users 10 --spawn-rate 2 --run-time 3m  \
-         --csv=logs/locust_log-u10r2t2.csv
+         --csv=logs/locust_log-webapp-u10r2t3.csv
 ```
