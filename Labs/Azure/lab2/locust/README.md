@@ -56,9 +56,11 @@ locust -f locustfile.py --host=${HOST} \
 
 - [ ] Run the `NumericalIntegration` Function on Azure
 
+:x: Note: Only one user was used for load testing, the function couldn't keep up
+
 ```
 HOST=https://clouds25lab2eurbrnifnc.azurewebsites.net/api
 locust -f locustfile.py --host=${HOST} \
-         --headless --users 10 --spawn-rate 2 --run-time 3m  \
+         --headless --users 1 --spawn-rate 2 --run-time 3m  \
          --csv=logs/locust_log-function-u10r2t3.csv
 ```
