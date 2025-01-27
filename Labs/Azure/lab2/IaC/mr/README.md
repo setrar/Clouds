@@ -19,3 +19,14 @@ Name                                                     Blob Type    Blob Tier 
 -------------------------------------------------------  -----------  -----------  --------  ------------------------  -------------------------  ----------
 20250126183415-51c6b113-3d3c-4954-862c-9698b53bf0e6.zip  BlockBlob    Hot          8394      application/octet-stream  2025-01-26T17:34:16+00:00
 ```
+
+```
+az storage blob download --account-name clouds25brlab2mrstrg --account-key ${ACCOUNT_KEY} \
+                         --container-name function-releases \
+                         --name 20250126183415-51c6b113-3d3c-4954-862c-9698b53bf0e6.zip --file function_code.zip
+```
+
+
+```
+curl -X POST https://clouds25brlab2mrfnc.azurewebsites.net/api/orchestrators/masterorchestrator -d '{}' -H "Content-Type: application/json"
+```
