@@ -8,7 +8,7 @@ resource "azurerm_service_plan" "lab2" {
   location            = azurerm_resource_group.lab2.location
   resource_group_name = azurerm_resource_group.lab2.name
   os_type             = "Linux"          # Required OS type
-  sku_name = "B1"      # Basic tier supports always_on
+  sku_name            = "S1"      # Basic tier supports always_on
 }
 
 # Define Linux Web App for Python
