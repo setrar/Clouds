@@ -10,7 +10,8 @@ export ACCOUNT_KEY=$(tofu output -raw storage_account_connection_string | sed -n
 ```
 
 ```
-az storage blob list --account-name clouds25brlab2mrstrg --container-name function-releases --account-key ${ACCOUNT_KEY} --output table
+az storage blob list --account-name clouds25brlab2mrstrg --account-key ${ACCOUNT_KEY} \
+                                                     --container-name function-releases --output table
 ```
 > Returns
 ```powershell
